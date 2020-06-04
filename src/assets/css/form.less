@@ -1,0 +1,92 @@
+.form {
+    text-align: center;
+    background-image: url('../images/bg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    min-height: 100vh;
+
+    .form_container {
+        width: 94vw;
+        margin: 30px 3vw;
+        box-shadow: #e0e0e0 0 0 20px;
+        border-radius: 22px;
+        background-color: #fff;
+
+        .form_title {
+            font-size: 22px;
+            color: #2d4f98;
+            border-bottom: 1px dashed #eee;
+            padding: 30px 0;
+            margin: 0 16px;
+        }
+
+        .form_title p {
+            margin: 0;
+        }
+
+        .form_title p:first-of-type {
+            font-size: 26px;
+            letter-spacing: 2px;
+            margin-left: 2px;
+            font-weight: bold;
+        }
+
+        .van-cell {
+            line-height: 28px;
+        }
+
+        .title span {
+            border-bottom: 1px #000 solid;
+            padding: 2px 0;
+        }
+
+        .tips {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .form_price {
+            font-weight: bold;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .price {
+            color: #f40;
+            font-size: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px 30px 20px;
+        }
+
+        .btn button {
+            background-color: #2d4f98;
+            border-color: #2d4f98;
+        }
+
+        .btn button::after {
+            border: none;
+        }
+
+        .van-cell:not(:last-child)::after {
+            right: 16px;
+        }
+    }
+
+    .logo {
+        width: 100px;
+        margin: 5vh 0 3vh;
+        /* margin-bottom: 1vh; */
+    }
+
+    .title {
+        color: #000;
+        font-size: 16px;
+        text-align: center;
+        letter-spacing: 6px;
+    }
+}
