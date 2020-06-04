@@ -48,10 +48,14 @@
           <p>受理时间： 10:30 - 22:30</p>
           <p>收到您的请求后，我们会尽快派遣服务人员联系您</p>
         </div>
-        <div class="btn">
-          <van-button round block type="info" native-type="submit">提交需求</van-button>
+        <div class="btn ">
+          <van-button round block type="info" native-type="submit" class="main">提交需求</van-button>
         </div>
       </van-form>
+      <!-- <div class="btn">
+        <van-button @click="callPhone()" plain round block type="info" class="service">联系客服</van-button>
+      </div> -->
+      <div class="service" @click="callPhone()">联系客服</div>
     </div>
     <br />
   </div>
@@ -157,11 +161,13 @@ export default {
       this.form.orderService = result[result.length - 1].text
       console.log(this.form.orderNeed)
     },
-    onChange(picker, values, index) {
-      let ColumnIndex = picker.getColumnIndex(index)
-      console.log('第' + index + '列', '第' + ColumnIndex + '个')
-      if (index === 0)
-        picker.setColumnValues(1, demand[ColumnIndex].children || []) //点当前列更新下一列数据，防止undefined
+    callPhone() {
+      Dialog.confirm({
+        title: '联系客服',
+        message: '是否确认拨打电话'
+      }).then(() => {
+        window.location.href = 'tel://' + '13112876805'
+      })
     },
     onSubmit(values) {
       if (this.dataD.vipServiceNum === 0) {
