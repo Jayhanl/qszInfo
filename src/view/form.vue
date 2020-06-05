@@ -59,7 +59,7 @@
         <van-field
           v-model="form.houseSize"
           label="户型"
-          maxlength="50"
+          maxlength="20"
           placeholder="x房x厅x卫"
           :rules="[{ required: true, message: '请填写户型' }]"
         />
@@ -159,7 +159,7 @@ export default {
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 {
-                  appId: 'wx9ceb9cf42e04a3ac', // 公众号名称，由商户传入
+                  appId: 'wx5adf34709292134d', // 公众号名称，由商户传入
                   timeStamp: resF.data.timeStamp, // 时间戳，自1970年以来的秒数
                   nonceStr: resF.data.nonceStr, // 随机串
                   package: resF.data.package,

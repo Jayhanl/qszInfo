@@ -21,7 +21,7 @@
           :value="form.orderService"
           label="需求类型"
           placeholder="点击需求类型"
-          :rules="[{ required: true, message: '请填写户型' }]"
+          :rules="[{ required: true, message: '请选择需求类型' }]"
           @click="showDemand = true"
         />
         <van-popup v-model="showDemand" position="bottom">
@@ -39,10 +39,10 @@
           autosize
           label="详细说明"
           type="textarea"
-          maxlength="200"
+          maxlength="300"
           placeholder="请输入详细说明..."
           show-word-limit
-          :rules="[{ required: true, message: '请填写详细说明' }]"
+          :rules="[{ required: true, message: '请输入详细说明' }]"
         />
         <div class="tips">
           <p>受理时间： 10:30 - 22:30</p>
@@ -69,7 +69,7 @@ import qs from 'qs'
 const demand = [
   // 我们习惯的格式。 可以后台给你出，如果你打不过的话，你就。。。
   {
-    text: '会员服务', // 默认识别text标签
+    text: '会员赠送服务', // 默认识别text标签
     id: 1,
     children: [
       {
@@ -161,6 +161,12 @@ export default {
       this.form.orderService = result[result.length - 1].text
       console.log(this.form.orderNeed)
     },
+    onChange(picker, values, index) {
+      let ColumnIndex = picker.getColumnIndex(index)
+      console.log('第' + index + '列', '第' + ColumnIndex + '个')
+      if (index === 0)
+        picker.setColumnValues(1, demand[ColumnIndex].children || []) //点当前列更新下一列数据，防止undefined
+    },
     callPhone() {
       Dialog.confirm({
         title: '联系客服',
@@ -170,13 +176,13 @@ export default {
       })
     },
     onSubmit(values) {
-      if (this.dataD.vipServiceNum === 0) {
-        this.$toast('您本周次数已使用，请下周再试')
-        return
-      }
+      // if (this.dataD.vipServiceNum === 0) {
+      //   this.$toast('您本周次数已使用，请下周再试')
+      //   return
+      // }
       Dialog.confirm({
         title: '提交需求',
-        message: '每周有一次免费服务次数，提交后等待服务人员联系您'
+        message: '提交后等待服务人员联系您'
       }).then(() => {
         let data = {
           orderExplain: this.form.orderExplain,
