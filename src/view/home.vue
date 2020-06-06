@@ -13,12 +13,12 @@ export default {
   methods: {
     // 获取openid
     getCode() {
-      if (
-        sessionStorage.getItem("openid") &&
-        sessionStorage.getItem("openid") != "undefined"
-      ) {
-        return false;
-      }
+      // if (
+      //   sessionStorage.getItem("token") &&
+      //   sessionStorage.getItem("token") != "undefined"
+      // ) {
+      //   return false;
+      // }
       let code = this.getUrlParam("code"); // 截取路径中的code，如果没有就去微信授权，如果已经获取到了就直接传code给后台获取openId
       let local = window.location.href;
       let APPID = "wx5adf34709292134d";

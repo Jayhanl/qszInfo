@@ -6,7 +6,7 @@ import qs from 'qs'
 // 设置公共请求头
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
-const root = process.env.NODE_ENV === 'production' ? 'https://maintain.zhiwei99.com/api' : '/api'
+const root = process.env.NODE_ENV === 'production' ? 'https://maintain.zhiwei99.com/api' : '/api' // https://192.168.1.105,//https://maintain.zhiwei99.com
 // token
 // console.log(window.sessionStorage.getItem('token'))
 // if (window.sessionStorage.getItem('token') !== 'undefined' && window.sessionStorage.getItem('token') !== null) {
