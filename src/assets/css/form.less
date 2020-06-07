@@ -75,8 +75,39 @@
         .van-cell:not(:last-child)::after {
             right: 16px;
         }
+        h3{
+            color: #2d4f98;
+        }
+        .member_combo{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            .item{
+                border-radius: 2px;
+                border: 1px solid #eee;
+                width: 42%;
+                margin: 10px 0;
+                font-size: 16px;
+                min-height: 80px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-content: center;
+                &>span{
+                    display: block;
+                    margin: 5px 0;
+                    .price{
+                        color: #f40;
+                        font-size: 23px;
+                    }
+                }
+            }
+            .active{
+                border: 2px solid #2d4f98;
+            }
+        }
     }
-
+    
     .logo {
         width: 100px;
         margin: 5vh 0 3vh;

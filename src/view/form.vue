@@ -25,15 +25,25 @@
           :rules="[{ required: true, message: '请填写房号' }]" />
         <van-field v-model="form.houseSize" label="户型" maxlength="20" placeholder="x房x厅x卫"
           :rules="[{ required: true, message: '请填写户型' }]" />
-        <van-field readonly clickable name="picker" :value="form.member.text" label="轻松装会员" placeholder="点击会员套餐"
+
+
+        <!-- <van-field readonly clickable name="picker" :value="form.member.text" label="轻松装会员" placeholder="点击会员套餐"
           :rules="[{ required: true, message: '请选择会员套餐' }]" @click="showMember = true" />
         <van-popup v-model="showMember" position="bottom">
           <van-picker show-toolbar :columns="columnsMember" @confirm="onConfirm" @cancel="showMember = false" />
-        </van-popup>
+        </van-popup> -->
+        <h3>轻松装会员</h3>
+        <div class="member_combo">
+          <div v-for="(item,index) in columnsMember" :class="['item',combo.month===item.month?'active':'']" @click="changeMember(index)">
+            <span>{{item.member}}</span>
+            <span>¥ <span class="price">{{item.price}}</span></span>
+          </div>
+        </div>
+        
         <div class="form_price">
           <span>
             价格：
-            <span class="price">¥{{form.member.price}}</span>
+            <span class="price">¥{{combo.price}}</span>
           </span>
         </div>
         <div class="btn">
@@ -61,29 +71,34 @@
           contactName: '',
           contactAddr: '',
           contactMobile: '',
-          code: '',
-          member: {
-            month: 12,
-            price: 499,
-            text: '¥499/年(12个月)'
-          },
+          code: ''
         },
         showMember: false,
+        combo:{
+          month: 12,
+          price: 499,
+          member:'年度会员',
+          text: '¥499/年(12个月)'
+        },
         columnsMember: [{
           month: 12,
           price: 499,
+          member:'年度会员',
           text: '¥499/年(12个月)'
         }, {
           month: 6,
           price: 299,
+          member:'半年度会员',
           text: '¥299/半年(6个月)'
         }, {
           month: 3,
           price: 199,
+          member:'季度会员',
           text: '¥199/季(3个月)',
         }, {
           month: 1,
           price: 99,
+          member:'月度会员',
           text: '¥99/月(1个月)'
         }],
         timer: '', //定时器
@@ -91,6 +106,10 @@
       }
     },
     methods: {
+      changeMember(e){
+        console.log(e);
+        this.combo = this.columnsMember[e]
+      },
       onConfirm(value) {
         this.showMember = false
         this.form.member = value
@@ -142,7 +161,7 @@
               contactAddr: this.form.contactAddr,
               houseNum: this.form.houseNum,
               houseSize: this.form.houseSize,
-              vipMonth: this.form.member.month,
+              vipMonth: this.combo.month,
             }
             axios.post('/user/open_vip', data).then(resF => {
               console.log(resF)

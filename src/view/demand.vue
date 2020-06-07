@@ -79,7 +79,8 @@
         <span @click="callPhone()">联系客服</span>
       </div>
     </div>
-    <br />
+    <div class="copyright">©市井（广州）文化传媒科技有限公司</div>
+    <!-- <br /> -->
   </div>
 </template>
 
