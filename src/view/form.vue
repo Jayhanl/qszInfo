@@ -18,7 +18,7 @@
           <van-button @click="getCode()" native-type="button" slot="button" size="small" type="primary">{{codeText}}
           </van-button>
         </van-field>
-        <van-field value="广东省，广州" label="省市" />
+        <van-field disabled value="广东省，广州" label="省市" />
         <van-field v-model="form.contactAddr" label="详细地址" maxlength="100" placeholder="请输入详细地址"
           :rules="[{ required: true, message: '请填写详细地址' }]" />
         <van-field v-model="form.houseNum" label="房号" maxlength="10" placeholder="请输入房号"
@@ -34,18 +34,23 @@
         </van-popup> -->
         <h3>轻松装会员</h3>
         <div class="member_combo">
-          <div v-for="(item,index) in columnsMember" :class="['item',combo.month===item.month?'active':'']" @click="changeMember(index)">
+          <div v-for="(item,index) in columnsMember" :class="['item',combo.month===item.month?'active':'']"
+            @click="changeMember(index)">
             <span>{{item.member}}</span>
             <span>¥ <span class="price">{{item.price}}</span></span>
           </div>
         </div>
-        
+
         <div class="form_price">
           <span>
             价格：
             <span class="price">¥{{combo.price}}</span>
           </span>
         </div>
+        <van-checkbox class="user_agreement" v-model="form.isAgree" label-disabled checked-color="#07c160">我已经阅读并同意
+          <router-link :to="{name:'agreement_user'}" class="agreement" @click="goAgreementUser">《用户协议及隐私条款》
+          </router-link> 和<router-link :to="{name:'agreement_qsz'}" class="agreement">《轻松装会员服务协议》</router-link>
+        </van-checkbox>
         <div class="btn">
           <van-button round block type="info" native-type="submit">购买会员</van-button>
         </div>
@@ -65,40 +70,42 @@
     name: 'formCreate',
     data() {
       return {
+        single: '',
         form: {
           houseSize: '',
           houseNum: '',
           contactName: '',
           contactAddr: '',
           contactMobile: '',
-          code: ''
+          code: '',
+          isAgree: 0
         },
         showMember: false,
-        combo:{
+        combo: {
           month: 12,
           price: 499,
-          member:'年度会员',
+          member: '年度会员',
           text: '¥499/年(12个月)'
         },
         columnsMember: [{
           month: 12,
           price: 499,
-          member:'年度会员',
+          member: '年度会员',
           text: '¥499/年(12个月)'
         }, {
           month: 6,
           price: 299,
-          member:'半年度会员',
+          member: '半年度会员',
           text: '¥299/半年(6个月)'
         }, {
           month: 3,
           price: 199,
-          member:'季度会员',
+          member: '季度会员',
           text: '¥199/季(3个月)',
         }, {
           month: 1,
           price: 99,
-          member:'月度会员',
+          member: '月度会员',
           text: '¥99/月(1个月)'
         }],
         timer: '', //定时器
@@ -106,7 +113,10 @@
       }
     },
     methods: {
-      changeMember(e){
+      goAgreementUser() {
+
+      },
+      changeMember(e) {
         console.log(e);
         this.combo = this.columnsMember[e]
       },
@@ -149,6 +159,10 @@
       },
       onSubmit(values) {
         let that = this
+        if (!that.form.isAgree) {
+          this.$toast('请阅读并同意协议')
+          return false
+        }
         Dialog.confirm({
             title: '购买会员',
             message: '请确认信息填写无误，购买成功后无法修改信息'
@@ -162,6 +176,7 @@
               houseNum: this.form.houseNum,
               houseSize: this.form.houseSize,
               vipMonth: this.combo.month,
+              isAgree: this.form.isAgree?1:0,
             }
             axios.post('/user/open_vip', data).then(resF => {
               console.log(resF)
@@ -198,7 +213,16 @@
           .catch()
       }
     },
-    created() {}
+    created() {
+      console.log(sessionStorage.getItem("vipLevel"));
+      console.log(sessionStorage.getItem("token"));
+      if (!sessionStorage.getItem("token")) {
+        this.$router.replace({
+          name: 'home'
+        })
+        return
+      }
+    }
   }
 
 </script>

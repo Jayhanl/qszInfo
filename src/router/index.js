@@ -4,8 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'home',
       component: () => import('@/view/home.vue')
@@ -19,6 +18,21 @@ export default new Router({
       path: '/demand',
       name: 'demand',
       component: () => import('@/view/demand.vue')
+    },
+    {
+      path: '/agreement_user',
+      name: 'agreement_user',
+      component: () => import('@/view/agreement_user.vue')
+    },
+    {
+      path: '/agreement_qsz',
+      name: 'agreement_qsz',
+      component: () => import('@/view/agreement_qsz.vue')
+    },
+    {
+      path: '/ordering',
+      name: 'ordering',
+      component: () => import('@/view/ordering.vue')
     }
   ]
 })

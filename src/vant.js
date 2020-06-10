@@ -12,7 +12,9 @@ import {
   List,
   Image,
   Lazyload,
-  Toast
+  Toast,
+  Checkbox,
+  CheckboxGroup
 } from 'vant'
 
 Vue.use(Button)
@@ -28,3 +30,5 @@ Vue.use(List)
 Vue.use(Image)
 Vue.use(Lazyload)
 Vue.use(Toast)
+Vue.use(Checkbox)
+Vue.use(CheckboxGroup)

@@ -52,12 +52,13 @@
             justify-content: space-around;
             align-items: center;
             margin: 20px;
+
+            .price {
+                color: #f40;
+                font-size: 20px;
+            }
         }
 
-        .price {
-            color: #f40;
-            font-size: 20px;
-        }
 
         .btn {
             padding: 10px 20px 30px 20px;
@@ -75,14 +76,17 @@
         .van-cell:not(:last-child)::after {
             right: 16px;
         }
-        h3{
+
+        h3 {
             color: #2d4f98;
         }
-        .member_combo{
+
+        .member_combo {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-evenly;
-            .item{
+
+            .item {
                 border-radius: 2px;
                 border: 1px solid #eee;
                 width: 42%;
@@ -93,21 +97,33 @@
                 flex-direction: column;
                 justify-content: center;
                 align-content: center;
-                &>span{
+
+                &>span {
                     display: block;
                     margin: 5px 0;
-                    .price{
+
+                    .price {
                         color: #f40;
                         font-size: 23px;
                     }
                 }
             }
-            .active{
+
+            .active {
                 border: 2px solid #2d4f98;
             }
         }
+
+        .user_agreement {
+            margin: 0 16px;
+            font-size: 12px;
+
+            .agreement {
+                color: #2d4f98;
+            }
+        }
     }
-    
+
     .logo {
         width: 100px;
         margin: 5vh 0 3vh;
