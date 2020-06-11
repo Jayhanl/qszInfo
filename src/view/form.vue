@@ -25,6 +25,7 @@
           :rules="[{ required: true, message: '请填写房号' }]" />
         <van-field v-model="form.houseSize" label="户型" maxlength="20" placeholder="x房x厅x卫"
           :rules="[{ required: true, message: '请填写户型' }]" />
+        <van-field v-model="form.employeeId" label="推荐人编号" maxlength="19" placeholder="请填写推荐人编号" />
 
 
         <!-- <van-field readonly clickable name="picker" :value="form.member.text" label="轻松装会员" placeholder="点击会员套餐"
@@ -78,6 +79,7 @@
           contactAddr: '',
           contactMobile: '',
           code: '',
+          employeeId:'',
           isAgree: 0
         },
         showMember: false,
@@ -176,7 +178,8 @@
               houseNum: this.form.houseNum,
               houseSize: this.form.houseSize,
               vipMonth: this.combo.month,
-              isAgree: this.form.isAgree?1:0,
+              isAgree: this.form.isAgree ? 1 : 0,
+              employeeId: this.form.employeeId || 0,
             }
             axios.post('/user/open_vip', data).then(resF => {
               console.log(resF)
