@@ -11,10 +11,21 @@ import {
   Loading,
   List,
   Image,
+  Icon,
   Lazyload,
   Toast,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  Tabbar,
+  TabbarItem,
+  Stepper,
+  AddressList,
+  AddressEdit,
+  Area,
+  Dialog,
+  Calendar,
+  Tabs,
+  Tab
 } from 'vant'
 
 Vue.use(Button)
@@ -32,3 +43,14 @@ Vue.use(Lazyload)
 Vue.use(Toast)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
+Vue.use(Tabbar)
+Vue.use(TabbarItem)
+Vue.use(Stepper)
+Vue.use(Icon)
+Vue.use(AddressList)
+Vue.use(AddressEdit)
+Vue.use(Area)
+Vue.use(Dialog)
+Vue.use(Calendar)
+Vue.use(Tab)
+Vue.use(Tabs)

@@ -364,7 +364,7 @@ export default {
           orderServiceSec: this.form.orderService1,
           orderExplain: this.form.orderExplain
         }
-        axios.post('/order/create', data).then(res => {
+        axios.post('/api/order/create', data).then(res => {
           this.$toast.success('提交成功')
           this.form = {
             demand: '',
@@ -379,7 +379,7 @@ export default {
       })
     },
     getData() {
-      axios.get('/user/get').then(res => {
+      axios.get('/api/user/get').then(res => {
         console.log(res.data)
         this.dataD = res.data
       })
@@ -404,5 +404,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import url('../assets/css/demand.less');
+@import url('../../assets/css/demand.less');
 </style>

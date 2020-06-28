@@ -6,7 +6,7 @@
     -moz-background-size: 100% 100%;
     min-height: calc(100vh - 20px);
     padding-top: 20px;
-
+    margin-bottom: 50px;
     .demand_form {
         margin: 30px 3vw 18px !important
     }
@@ -35,24 +35,30 @@
         }
 
         .demand_title {
-            font-size: 22px;
-            color: #2d4f98;
             border-bottom: 1px dashed #eee;
             padding: 20px 0;
             margin: 0 16px;
+            position: relative;
+            color: #2d4f98;
         }
 
-        .demand_title p {
+        .demand_title .text {
+            font-size: 22px;
             margin: 0;
         }
 
-        .demand_title p:first-of-type {
+        .demand_title .text:first-of-type {
             font-size: 26px;
             letter-spacing: 2px;
             margin-left: 2px;
             font-weight: bold;
         }
-
+        .demand_title span {
+            position: absolute;
+            right: 0;
+            top: 10px;
+            font-size: 13px;
+        }
         .van-cell {
             line-height: 28px;
         }
@@ -111,7 +117,6 @@
 
     .copyright {
         font-size: 14px;
-        margin-bottom: 10px;
     }
 
     .logo {

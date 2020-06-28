@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueClipboard from 'vue-clipboard2'
-import '@/libs/axios'
-require('./vant')
+import '@/assets/js/axios'
+import '@/assets/js//vant'
+
+Vue.use(VueClipboard)
 Vue.config.productionTip = false
 VueClipboard.config.autoSetContainer = true
 

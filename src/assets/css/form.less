@@ -1,6 +1,10 @@
+.margin-bottom {
+    margin-bottom: 50px;
+}
+
 .form {
     text-align: center;
-    background-image: url('../images/bg.png');
+    background-image: url('../../assets/images/bg.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     -moz-background-size: 100% 100%;
@@ -62,15 +66,15 @@
 
         .btn {
             padding: 10px 20px 30px 20px;
-        }
 
-        .btn button {
-            background-color: #2d4f98;
-            border-color: #2d4f98;
-        }
+            button {
+                background-color: #2d4f98;
+                border-color: #2d4f98;
+            }
 
-        .btn button::after {
-            border: none;
+            button::after {
+                border: none;
+            }
         }
 
         .van-cell:not(:last-child)::after {
@@ -88,11 +92,12 @@
 
             .item {
                 border-radius: 2px;
-                border: 1px solid #eee;
+                border: 2px solid #eee;
                 width: 42%;
                 margin: 10px 0;
+                padding: 10px 0;
                 font-size: 16px;
-                min-height: 80px;
+                min-height: 91px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -100,12 +105,33 @@
 
                 &>span {
                     display: block;
-                    margin: 5px 0;
+                    margin: 2px 0;
 
                     .price {
                         color: #f40;
                         font-size: 23px;
                     }
+                }
+
+                .cont {
+                    display: flex;
+                    flex-direction: column;
+
+                    .name {
+                        color: #2d4f98;
+                        font-weight: bold;
+                        font-size: 18px;
+                    }
+
+                    .tips {
+                        color: #777;
+                        font-size: 12px;
+                    }
+
+                }
+
+                .num {
+                    margin-top: 5px;
                 }
             }
 
@@ -115,12 +141,37 @@
         }
 
         .user_agreement {
-            margin: 0 16px;
+            margin: 10px 16px;
             font-size: 12px;
 
             .agreement {
                 color: #2d4f98;
             }
+        }
+    }
+
+    .btnRow {
+        padding: 10px 20px 10px 20px;
+        display: flex;
+        flex-direction: row;
+
+        button {
+            width: 40%;
+            margin: 0 auto;
+        }
+
+        .confirm {
+            background-color: #2d4f98;
+            border-color: #2d4f98;
+        }
+
+        .cancel {
+            background-color: #fff;
+            border: 1px solid #eee;
+        }
+
+        .confirm::after {
+            border: none;
         }
     }
 
@@ -135,5 +186,59 @@
         font-size: 16px;
         text-align: center;
         letter-spacing: 6px;
+    }
+
+    .coupon_item {
+        width: 90%;
+        margin: 15px auto;
+        background-color: #fff;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 70px;
+        border-radius: 8px;
+        box-shadow: 3px 4px 4px #f0f0f0;
+        color: #0c0c0c;
+        padding: 10px 0;
+    }
+
+    .coupon_left {
+        display: flex;
+        flex-direction: column;
+        font-size: 15px;
+        margin-left: 20px;
+
+        span:first-of-type {
+            font-weight: bold;
+        }
+
+        .price {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+
+            .old {
+                text-decoration: line-through;
+                color: #666;
+                margin-right: 5px;
+            }
+
+            .new {
+                color: #f40;
+            }
+        }
+
+        .tips {
+            margin-top: 2px;
+            font-size: 12px;
+            color: #666;
+        }
+    }
+
+    .coupon_right {
+        margin-right: 20px;
+        color: #2d4f98;
+        font-weight: bold;
     }
 }

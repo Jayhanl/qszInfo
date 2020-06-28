@@ -21,7 +21,7 @@
         // }
         let code = this.getUrlParam("code"); // 截取路径中的code，如果没有就去微信授权，如果已经获取到了就直接传code给后台获取openId
         let local = window.location.href;
-        let APPID = "wx5adf34709292134d";
+        let APPID = "wxd6dceeee251fe0ad";
         if (code == null || code === "") {
           window.location.href =
             "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" +
@@ -71,7 +71,7 @@
       }
     },
     created() {
-      this.getCode();
+      // this.getCode();
     }
   };
 
