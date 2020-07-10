@@ -130,20 +130,40 @@ export default {
           text: '9点'
         },
         {
+          id: 10,
+          text: '10点'
+        },
+        {
           id: 11,
           text: '11点'
+        },
+        {
+          id: 12,
+          text: '12点'
         },
         {
           id: 13,
           text: '13点'
         },
         {
+          id: 14,
+          text: '14点'
+        },
+        {
           id: 15,
           text: '15点'
         },
         {
+          id: 16,
+          text: '16点'
+        },
+        {
           id: 17,
           text: '17点'
+        },
+        {
+          id: 18,
+          text: '18点'
         },
         {
           id: 19,
@@ -151,6 +171,15 @@ export default {
         }
       ],
       columnsMember: [
+        {
+          id: 11,
+          num: 0,
+          choice: false,
+          price: 10,
+          name: '碗碟清洗',
+          text: '10元/次',
+          tips: ''
+        },
         {
           id: 1,
           num: 0,
@@ -226,9 +255,9 @@ export default {
           id: 9,
           num: 0,
           choice: false,
-          price: 50,
-          name: '家具整理清洁',
-          text: '50元/小时',
+          price: 29.9,
+          name: '家居整理清洁',
+          text: '29.9元/小时',
           tips: '(不含家电清洗及家具清洁)'
         },
         {
@@ -255,14 +284,31 @@ export default {
       )
       sessionStorage.setItem('form', JSON.stringify(this.form))
       sessionStorage.setItem('addrChoice', 'service')
+      sessionStorage.setItem('combo', this.combo)
     },
     //选择预约日期
     onCalendar(value) {
+      let date = new Date()
+      let hours = date.getHours()
       this.form.yyDate = this.formatTime(value)
       this.showCalendar = false
+      if (
+        this.formatTime(date) === this.form.yyDate &&
+        this.form.yyTime.id <= hours + 1
+      ) {
+        this.form.yyTime = ''
+        this.$toast('请重新选择预约时间')
+      }
     },
     //选择预约时间
     onTime(value) {
+      let date = new Date()
+      let hours = date.getHours()
+      if (this.formatTime(date) === this.form.yyDate && value.id <= hours + 1) {
+        this.form.yyTime = ''
+        this.$toast('请预约1小时后的时间')
+        return
+      }
       this.form.yyTime = value
       this.showTime = false
     },
@@ -275,6 +321,7 @@ export default {
       this.onTotal()
     },
     onTotal(index) {
+      if (index !== undefined) this.combo = this.columnsMember[index].id
       // if (index !== undefined) this.columnsMember[index].choice = true
       let sum = 0
       this.columnsMember
@@ -333,7 +380,7 @@ export default {
         return false
       }
       let arr = this.columnsMember.filter(item => item.id === this.combo)
-      if (arr.length === 0||(arr.length===1&&arr[0].num===0)) {
+      if (arr.length === 0 || (arr.length === 1 && arr[0].num === 0)) {
         this.$toast('请至少选择一项服务')
         return false
       }
@@ -397,6 +444,7 @@ export default {
                       .then(() => {
                         this.$toast.success('购买成功')
                         sessionStorage.removeItem('form')
+                        sessionStorage.removeItem('combo')
                         sessionStorage.removeItem('columnsMember')
                         this.$route.params.item = ''
                       })
@@ -424,6 +472,7 @@ export default {
       if (sessionStorage.getItem('columnsMember')) {
         this.columnsMember = JSON.parse(sessionStorage.getItem('columnsMember'))
         this.form = JSON.parse(sessionStorage.getItem('form'))
+        this.combo = parseInt(sessionStorage.getItem('combo'))
         this.onTotal()
       }
       this.showConfirm = true
@@ -432,9 +481,7 @@ export default {
     this.form.maxDate = this.funDate(7)
     document.title = '市井&轻松装'
   },
-  destroyed() {
-    console.log(123321321312)
-  }
+  destroyed() {}
 }
 </script>
 

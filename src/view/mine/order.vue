@@ -1,8 +1,9 @@
 <template>
   <div class="order_container">
+    <navbar title="我的订单" />
     <van-tabs v-model="orderStatus" @click="onTabs" color="#2d4f98">
       <van-tab name="all" title="全部"></van-tab>
-      <van-tab name="0" title="待付款"></van-tab>
+      <van-tab name="0" title="未付款"></van-tab>
       <van-tab name="1" title="待派遣"></van-tab>
       <van-tab name="2" title="待完成"></van-tab>
       <van-tab name="3" title="已完成"></van-tab>
@@ -50,11 +51,14 @@
 </template>
 
 <script>
-import { Dialog } from 'vant'
 import axios from 'axios'
+import navbar from '@/components/navbar.vue'
 
 export default {
   name: 'order',
+  components: {
+    navbar
+  },
   data() {
     return {
       logo_img: require('@/assets/images/logo-min.png'),
@@ -126,7 +130,7 @@ export default {
     // this.active = this.$route.params.status
     // this.orderStatus = this.$route.params.status
     this.getData()
-    document.title = '我的订单'
+    // document.title = '我的订单'
   }
 }
 </script>

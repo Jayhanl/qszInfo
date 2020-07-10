@@ -1,5 +1,6 @@
 <template>
   <div class="addr_add">
+    <navbar title="编辑地址" />
     <van-form @submit="onEdit">
       <van-field
         v-model="form.contactName"
@@ -16,11 +17,11 @@
         placeholder="请输入联系电话"
         :rules="[{ required: true, message: '请填写联系电话' },{pattern:/\d{11}/,message: '请填写正确的联系电话'}]"
       />
-      <van-field
+      <!-- <van-field
         readonly
         clickable
         name="picker"
-        :value="form.addr"
+        :value="form.area"
         label="省市区"
         placeholder="点击选择省市区"
         @click="showArea = true"
@@ -29,7 +30,25 @@
         <van-area :area-list="areaList" @confirm="onConfirm" @cancel="showArea = false" />
       </van-popup>
       <van-field
+        readonly
+        clickable
+        :value="form.plot"
+        label="小区"
+        placeholder="点击选择小区"
+        :rules="[{ required: true, message: '请选择小区' }]"
+        @click="showPlot = true"
+      />
+      <van-popup v-model="showPlot" position="bottom">
+        <van-picker
+          show-toolbar
+          :columns="columnsPlot"
+          @confirm="onPlot"
+          @cancel="showPlot = false"
+        />
+      </van-popup>-->
+      <van-field
         v-model="form.contactAddr"
+        readonly
         type="textarea"
         label="详细地址"
         maxlength="100"
@@ -43,7 +62,7 @@
         placeholder="方便您快速辨认地址"
         :rules="[{ required: true, message: '请填写标签' }]"
       />
-
+      <div class="tips">详细地址无法修改</div>
       <div class="btn_list">
         <van-button round block type="info" native-type="submit" class="edit">编辑地址</van-button>
         <van-button
@@ -63,27 +82,33 @@
 <script>
 import axios from 'axios'
 import area from '@/assets/js/area'
+import navbar from '@/components/navbar.vue'
 
 export default {
-  name: 'addr',
-  components: {},
+  name: 'addr_edit',
+  components: {
+    navbar
+  },
   data() {
     return {
       areaList: area,
       showArea: false,
+      showPlot: false,
       chosenAddressId: '1',
       dataList: [],
-      form: {}
+      form: {},
+      columnsPlot: ['珠江帝景', '鸿景花园', '泊雅湾', '利安花园']
     }
   },
   methods: {
     onConfirm(arr) {
-      this.form.addr = arr[0].name + ',' + arr[1].name + ',' + arr[2].name
+      this.form.area = arr[0].name + ',' + arr[1].name + ',' + arr[2].name
       console.log(arr)
       this.showArea = false
     },
-    onDelete() {
-      this.$toast('delete')
+    onPlot(e) {
+      this.form.plot = e
+      this.showPlot = false
     },
     onEdit() {
       axios
@@ -91,7 +116,8 @@ export default {
           addressId: this.form.addressId,
           contactName: this.form.contactName,
           contactMobile: this.form.contactMobile,
-          contactAddr: this.form.addr + ',' + this.form.contactAddr,
+          contactAddr:
+            this.form.area + ',' + this.form.plot + ',' + this.form.contactAddr,
           remark: this.form.remark
         })
         .then(res => {
@@ -122,11 +148,13 @@ export default {
     let item = this.$route.params.item
     if (item) {
       this.form = item
-      let ind = item.contactAddr.lastIndexOf(',')
-      this.form.addr = item.contactAddr.substring(0, ind)
-      this.form.contactAddr = item.contactAddr.substring(ind + 1)
-      console.log(this.form.contactAddr)
-      document.title = '编辑地址'
+      // let ind = item.contactAddr.lastIndexOf(',')
+      // let ind2 = item.contactAddr.lastIndexOf(',',ind-1)
+      // this.form.area = item.contactAddr.substring(0, ind2)
+      // this.form.plot = item.contactAddr.substring(ind2+1, ind)
+      // this.form.contactAddr = item.contactAddr.substring(ind + 1)
+      console.log(this.form)
+      // document.title = '编辑地址'
     } else {
       this.$router
         .replace({
@@ -160,6 +188,16 @@ export default {
     }
     button::after {
       border: none;
+    }
+  }
+  .tips {
+    color: #656565;
+    margin-left: 16px;
+    font-size: 12px;
+    &::before {
+      content: '*';
+      margin-right: 4px;
+      color: #f40;
     }
   }
 }

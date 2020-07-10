@@ -1,5 +1,6 @@
 <template>
   <div class="orderD_container">
+    <navbar title="订单详情" />
     <p class="title">用户信息</p>
     <van-cell-group>
       <van-cell title="姓名:" :value="dataD.contactName" />
@@ -35,11 +36,14 @@
 </template>
 
 <script>
-import { Toast, Dialog } from 'vant'
 import axios from 'axios'
+import navbar from '@/components/navbar.vue'
 
 export default {
   name: 'orderDetail',
+  components: {
+    navbar
+  },
   data() {
     return {
       id: '',
@@ -65,7 +69,7 @@ export default {
   created() {
     this.id = this.$route.params.id
     this.getData()
-    document.title = '订单详情'
+    // document.title = '订单详情'
   }
 }
 </script>

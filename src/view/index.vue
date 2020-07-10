@@ -7,7 +7,9 @@ import axios from 'axios'
 export default {
   name: 'home',
   data() {
-    return {}
+    return {
+      employeeId: ''
+    }
   },
   methods: {
     // 获取openid
@@ -19,6 +21,7 @@ export default {
       //   return false;
       // }
       let code = this.getUrlParam('code') // 截取路径中的code，如果没有就去微信授权，如果已经获取到了就直接传code给后台获取openId
+      if(this.getUrlParam('employeeId')) localStorage.setItem('employeeId',this.getUrlParam('employeeId'))
       let local = window.location.href
       let APPID = 'wxd6dceeee251fe0ad'
       if (code == null || code === '') {
@@ -54,23 +57,33 @@ export default {
             url = url.replace(/(\?|#)[^'"]*/, '') //去除参数
             window.history.pushState({}, 0, url)
           }
+          //判断跳转
           if (sessionStorage.getItem('url')) {
-            this.$router.replace({
-              name: sessionStorage.getItem('url')
-            })
-            sessionStorage.removeItem('url')
-          } else if (res.data.userData.contactMobile) {
-            if (sessionStorage.getItem('jump')) {
-              this.$router.replace({
-                name: sessionStorage.getItem('jump')
+            this.$router
+              .replace({
+                name: 'service'
               })
-              sessionStorage.removeItem('jump')
-              return
-            }
-            this.$router.replace({
-              name: 'service'
-            })
+              .then(() => {
+                this.$router.push({
+                  name: sessionStorage.getItem('url')
+                })
+                sessionStorage.removeItem('url')
+              })
+          } else if (res.data.userData.contactMobile) {
+            this.$router
+              .replace({
+                name: 'service'
+              })
+              .then(() => {
+                if (sessionStorage.getItem('jump')) {
+                  this.$router.push({
+                    name: sessionStorage.getItem('jump')
+                  })
+                  sessionStorage.removeItem('jump')
+                }
+              })
           } else {
+            console.log(this.employeeId)
             this.$router.replace({
               name: 'register'
             })

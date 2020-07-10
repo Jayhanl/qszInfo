@@ -71,7 +71,7 @@
       }
     },
     created() {
-      // this.getCode();
+      this.getCode();
     }
   };
 

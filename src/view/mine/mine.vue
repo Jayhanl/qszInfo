@@ -3,10 +3,10 @@
     <div class="me">
       <div class="userinfo">
         <div class="userinfo_avatar">
-          <van-image round fit="cover" width="100%" height="100%" :src="haedImg" />
+          <van-image round fit="cover" width="100%" height="100%" :src="require('@/assets/images/logo-min.png')" />
         </div>
         <div class="userinfo_grade">
-          <van-tag v-if="userInfo.vip_code" type="warning">VIP</van-tag>
+          <!-- <van-tag v-if="userInfo.vip_code" type="warning">VIP</van-tag> -->
           <span>{{userInfo.mobile||'轻松装'}}</span>
         </div>
         <!-- <router-link :to="{name:'tips',params:{free:userInfo.free_num}}" class="tips_img">
@@ -23,7 +23,7 @@
       <div class="list">
         <router-link :to="{name:'order',params:{status:'0'}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="balance-list-o" />
-          <span>待付款</span>
+          <span>未付款</span>
         </router-link>
         <router-link :to="{name:'order',params:{status:'1'}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="todo-list-o" />
@@ -39,11 +39,29 @@
         </router-link>
       </div>
     </div>
-    <router-link :to="{name:'order'}" class="active_container">
+    <!-- <router-link :to="{name:'order'}" class="active_container">
       <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="description" />
       <div class="active_text">
         <span>我的订单</span>
         <span class="active_text_english">My Order</span>
+      </div>
+      <div class="active_triangle"></div>
+    </router-link> -->
+
+    <router-link :to="{name:'sign'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="sign" />
+      <div class="active_text">
+        <span>每日签到</span>
+        <span class="active_text_english">Daily Attendance</span>
+      </div>
+      <div class="active_triangle"></div>
+    </router-link>
+
+    <router-link :to="{name:'code'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="qr" />
+      <div class="active_text">
+        <span>我的二维码</span>
+        <span class="active_text_english">My Qr Code</span>
       </div>
       <div class="active_triangle"></div>
     </router-link>
@@ -80,7 +98,6 @@ export default {
   },
   data() {
     return {
-      haedImg: require('@/assets/images/logo-min.png'),
       userInfo: {}
     }
   },
@@ -101,11 +118,7 @@ export default {
     },
     getData() {
       axios
-        .get('/api/user/get', {
-          params: {
-            token: sessionStorage.getItem('token')
-          }
-        })
+        .get('/api/user/get')
         .then(res => {
           // sessionStorage.setItem('free_num', res.data.free_num)
           res.data.contactMobile =
@@ -118,6 +131,7 @@ export default {
   },
   created() {
     if (!sessionStorage.getItem('token')) {
+      sessionStorage.setItem('jump', 'mine')
       this.$router.replace({
         name: 'index'
       })
@@ -125,7 +139,6 @@ export default {
     }
     this.getData()
     document.title = '市井&轻松装'
-    // this.getConfig()
   }
 }
 </script>

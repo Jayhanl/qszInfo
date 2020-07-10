@@ -25,7 +25,8 @@ import {
   Dialog,
   Calendar,
   Tabs,
-  Tab
+  Tab,
+  NavBar
 } from 'vant'
 
 Vue.use(Button)
@@ -54,3 +55,4 @@ Vue.use(Dialog)
 Vue.use(Calendar)
 Vue.use(Tab)
 Vue.use(Tabs)
+Vue.use(NavBar)

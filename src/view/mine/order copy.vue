@@ -2,7 +2,7 @@
   <div class="order_container">
     <van-tabs v-model="active" @click="onTabs" color="#0081ff">
       <van-tab name="all" title="全部"></van-tab>
-      <van-tab name="0" title="待付款"></van-tab>
+      <van-tab name="0" title="未付款"></van-tab>
       <van-tab name="1" title="已付款"></van-tab>
       <van-tab name="2" title="已失效"></van-tab>
       <van-tab name="3" title="已完成"></van-tab>

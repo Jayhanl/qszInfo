@@ -41,11 +41,13 @@
             type="primary"
           >{{codeText}}</van-button>
         </van-field>
-        <van-field v-model="form.employeeId" label="推荐人编号" maxlength="19" placeholder="请填写推荐人编号" />
+        <van-field v-model="form.employeeId" label="推荐码" maxlength="19" placeholder="请填写推荐码" />
         <van-checkbox
           class="user_agreement"
           v-model="form.isAgree"
           label-disabled
+          type="digit"
+          maxlength="20"
           checked-color="#07c160"
         >
           我已经阅读并同意
@@ -90,9 +92,9 @@ export default {
       console.log(e)
       this.combo = this.columnsMember[e]
     },
-    onCancel(){
+    onCancel() {
       this.$router.push({
-        name:'service'
+        name: 'service'
       })
     },
     onConfirm(value) {
@@ -152,19 +154,27 @@ export default {
           }
           axios.put('/api/user/update_base_info', data).then(resF => {
             console.log(resF)
-            this.$router.replace({
-              name: 'mine'
-            }).then(()=>{
-              this.$router.push({
-                name:'coupon'
-              }).then(this.$toast.success('注册成功'))
-            })
+            this.$router
+              .replace({
+                name: 'mine'
+              })
+              .then(() => {
+                localStorage.removeItem('employeeId')
+                this.$router
+                  .push({
+                    name: 'coupon'
+                  })
+                  .then(this.$toast.success('注册成功'))
+              })
           })
         })
         .catch()
     }
   },
   created() {
+    if(localStorage.getItem('employeeId'))
+      this.form.employeeId = parseInt(localStorage.getItem('employeeId'))
+    console.log(localStorage.getItem('employeeId'))
     document.title = '市井会员'
     if (!sessionStorage.getItem('token')) {
       this.$router.replace({

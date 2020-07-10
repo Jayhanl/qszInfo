@@ -1,8 +1,22 @@
 <template>
   <div class="form">
+    <navbar title="我的优惠券" />
     <img class="logo" src="@/assets/images/logo.png" />
     <div class="title">
       <span>轻/装/时/代 无/处/不/在</span>
+    </div>
+
+    <div v-for="(item,index) in userInfo.cleanHalfNum" :key="index" class="coupon_item">
+      <div class="coupon_left">
+        <span>1小时保洁优惠券</span>
+        <span class="price">
+          原价：
+          <span class="old">¥ 29.9</span> 折扣后：
+          <span class="new">¥ 14.75</span>
+        </span>
+        <span class="tips">（抵扣14.75元）</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(4)">立即下单</div>
     </div>
 
     <div v-for="(item,index) in userInfo.cleanDiscountNum" :key="index" class="coupon_item">
@@ -10,11 +24,10 @@
         <span>2小时保洁优惠券</span>
         <span class="price">
           原价：
-          <span class="old">¥ 100</span> 折扣后：
-          <span class="new">¥ 50</span>
+          <span class="old">¥ 59.8</span> 折扣后：
+          <span class="new">¥ 29.9</span>
         </span>
-
-        <span class="tips">（抵扣50元）</span>
+        <span class="tips">（抵扣29.9元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(1)">立即下单</div>
     </div>
@@ -44,6 +57,7 @@
       </div>
       <div class="coupon_right" @click="onShowConfirm(3)">立即下单</div>
     </div>
+
     <br />
     <!-- 确认下单弹框 -->
     <van-dialog v-model="showConfirm" title="标题" :show-confirm-button="false">
@@ -90,11 +104,11 @@
 
 <script>
 import axios from 'axios'
-import tabBar from '@/components/tabbar.vue'
+import navbar from '@/components/navbar.vue'
 export default {
   name: 'coupon',
   components: {
-    tabBar
+    navbar
   },
   data() {
     return {
@@ -115,20 +129,40 @@ export default {
           text: '9点'
         },
         {
+          id: 10,
+          text: '10点'
+        },
+        {
           id: 11,
           text: '11点'
+        },
+        {
+          id: 12,
+          text: '12点'
         },
         {
           id: 13,
           text: '13点'
         },
         {
+          id: 14,
+          text: '14点'
+        },
+        {
           id: 15,
           text: '15点'
         },
         {
+          id: 16,
+          text: '16点'
+        },
+        {
           id: 17,
           text: '17点'
+        },
+        {
+          id: 18,
+          text: '18点'
         },
         {
           id: 19,
@@ -152,11 +186,27 @@ export default {
     },
     //选择预约日期
     onCalendar(value) {
+      let date = new Date()
+      let hours = date.getHours()
       this.form.yyDate = this.formatTime(value)
       this.showCalendar = false
+      if (
+        this.formatTime(date) === this.form.yyDate &&
+        this.form.yyTime.id <= hours + 1
+      ) {
+        this.form.yyTime = ''
+        this.$toast('请重新选择预约时间')
+      }
     },
     //选择预约时间
     onTime(value) {
+      let date = new Date()
+      let hours = date.getHours()
+      if (this.formatTime(date) === this.form.yyDate && value.id <= hours + 1) {
+        this.form.yyTime = ''
+        this.$toast('请预约1小时后的时间')
+        return
+      }
       this.form.yyTime = value
       this.showTime = false
     },
@@ -265,7 +315,7 @@ export default {
       this.showConfirm = true
       this.addrData = this.$route.params.item
     }
-    document.title = '我的优惠券'
+    // document.title = '我的优惠券'
     this.getData()
     this.form.maxDate = this.funDate(7)
   }

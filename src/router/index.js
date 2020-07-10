@@ -30,6 +30,16 @@ export default new Router({
     component: () => import('@/view/mine/mine.vue')
   },
   {
+    path: '/code',
+    name: 'code',
+    component: () => import('@/view/mine/code.vue')
+  },
+  {
+    path: '/sign',
+    name: 'sign',
+    component: () => import('@/view/mine/sign.vue')
+  },
+  {
     path: '/order',
     name: 'order',
     component: () => import('@/view/mine/order.vue')

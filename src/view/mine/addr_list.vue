@@ -23,6 +23,7 @@
         <span>新增收获地址</span>
       </div>
     </div>-->
+    <navbar title="我的地址" />
     <van-address-list
       v-model="chosenAddressId"
       :switchable="isChoice"
@@ -35,12 +36,14 @@
 </template>
 
 <script>
-import { Dialog } from 'vant'
 import axios from 'axios'
+import navbar from '@/components/navbar.vue'
 
 export default {
   name: 'addr',
-  components: {},
+  components: {
+    navbar
+  },
   data() {
     return {
       url: '',
@@ -65,7 +68,7 @@ export default {
     },
     onSelect(item) {
       console.log(item)
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '选择地址',
         message: '是否确认选择该地址'
       })
@@ -101,7 +104,7 @@ export default {
       this.url = sessionStorage.getItem('addrChoice')
       this.isChoice = true
     }
-    document.title = '我的地址'
+    // document.title = '我的地址'
     this.getData()
   }
 }

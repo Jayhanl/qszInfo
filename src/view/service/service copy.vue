@@ -227,7 +227,7 @@ export default {
           num: 0,
           choice: false,
           price: 50,
-          name: '家具整理清洁',
+          name: '家居整理清洁',
           text: '50元/小时',
           tips: '(不含家电清洗及家具清洁)'
         },
