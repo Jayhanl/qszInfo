@@ -6,6 +6,19 @@
       <span>轻/装/时/代 无/处/不/在</span>
     </div>
 
+    <div v-for="(item,index) in userInfo.bowlDiscountNum" :key="index" class="coupon_item">
+      <div class="coupon_left">
+        <span>碗碟清洗优惠券(1次)</span>
+        <span class="price">
+          原价：
+          <span class="old">¥ 9.9</span> 折扣后：
+          <span class="new">¥ 1.99</span>
+        </span>
+        <span class="tips">（抵扣7.91元）</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(5)">立即下单</div>
+    </div>
+
     <div v-for="(item,index) in userInfo.cleanHalfNum" :key="index" class="coupon_item">
       <div class="coupon_left">
         <span>1小时保洁优惠券</span>
@@ -32,7 +45,33 @@
       <div class="coupon_right" @click="onShowConfirm(1)">立即下单</div>
     </div>
 
-    <div v-for="(item,index) in userInfo.illDiscountNum" :key="index" class="coupon_item">
+    <div v-for="(item,index) in userInfo.cleanFreeNum" :key="index" class="coupon_item">
+      <div class="coupon_left">
+        <span>1小时保洁体验券</span>
+        <span class="price">
+          原价：
+          <span class="old">¥ 29.9</span> 折扣后：
+          <span class="new">¥ 0.01</span>
+        </span>
+        <span class="tips">（抵扣29.89元）</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(7)">立即下单</div>
+    </div>
+
+    <div v-for="(item,index) in userInfo.cleanOneNum" :key="index" class="coupon_item">
+      <div class="coupon_left">
+        <span>2小时保洁体验券</span>
+        <span class="price">
+          原价：
+          <span class="old">¥ 59.8</span> 折扣后：
+          <span class="new">¥ 1</span>
+        </span>
+        <span class="tips">（抵扣58.8元）</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(8)">立即下单</div>
+    </div>
+
+    <!-- <div v-for="(item,index) in userInfo.illDiscountNum" :key="index" class="coupon_item">
       <div class="coupon_left">
         <span>照明安装优惠券</span>
         <span class="price">
@@ -43,9 +82,9 @@
         <span class="tips">（抵扣10元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(2)">立即下单</div>
-    </div>
+    </div>-->
 
-    <div v-for="(item,index) in userInfo.carDiscountNum" :key="index" class="coupon_item">
+    <!-- <div v-for="(item,index) in userInfo.carDiscountNum" :key="index" class="coupon_item">
       <div class="coupon_left">
         <span>汽车外部清洗</span>
         <span class="price">
@@ -56,6 +95,19 @@
         <span class="tips">（抵扣10元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(3)">立即下单</div>
+    </div>-->
+
+    <div v-for="(item,index) in userInfo.carryDiscountNum" :key="index" class="coupon_item">
+      <div class="coupon_left">
+        <span>搬运优惠券(1人/1小时)</span>
+        <span class="price">
+          原价：
+          <span class="old">¥ 65</span> 折扣后：
+          <span class="new">¥ 55</span>
+        </span>
+        <span class="tips">（抵扣10元）</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(6)">立即下单</div>
     </div>
 
     <br />
@@ -88,6 +140,7 @@
           :rules="[{ required: true, message: '请选择预约时间' }]"
           @click="showTime = true"
         />
+        <van-field v-model="form.employeeId" label="指定师傅" maxlength="10" placeholder="请输入师傅编号(选填)" />
         <div class="btnRow">
           <van-button class="cancel" round native-type="button" @click="showConfirm = false">取消</van-button>
           <van-button class="confirm" round type="info" native-type="submit">预约下单</van-button>
@@ -108,7 +161,7 @@ import navbar from '@/components/navbar.vue'
 export default {
   name: 'coupon',
   components: {
-    navbar
+    navbar,
   },
   data() {
     return {
@@ -121,61 +174,66 @@ export default {
         discountType: '',
         maxDate: '',
         yyDate: '',
-        yyTime: {}
+        yyTime: {},
+        employeeId: '',
       },
       columnsTime: [
         {
           id: 9,
-          text: '9点'
+          text: '9点',
         },
         {
           id: 10,
-          text: '10点'
+          text: '10点',
         },
         {
           id: 11,
-          text: '11点'
+          text: '11点',
         },
         {
           id: 12,
-          text: '12点'
+          text: '12点',
         },
         {
           id: 13,
-          text: '13点'
+          text: '13点',
         },
         {
           id: 14,
-          text: '14点'
+          text: '14点',
         },
         {
           id: 15,
-          text: '15点'
+          text: '15点',
         },
         {
           id: 16,
-          text: '16点'
+          text: '16点',
         },
         {
           id: 17,
-          text: '17点'
+          text: '17点',
         },
         {
           id: 18,
-          text: '18点'
+          text: '18点',
         },
         {
           id: 19,
-          text: '19点'
-        }
-      ]
+          text: '19点',
+        },
+        {
+          id: 20,
+          text: '20点',
+        },
+      ],
     }
   },
   methods: {
     //前往地址列表
     goAddr() {
       this.$router.push({
-        name: 'addr_list'
+        name: 'addr_list',
       })
       sessionStorage.setItem('form', JSON.stringify(this.form))
       sessionStorage.setItem('addrChoice', 'coupon')
@@ -217,7 +275,7 @@ export default {
       var month = date.getMonth() + 1
       var day = date.getDate()
       return [year, month, day]
-        .map(n => {
+        .map((n) => {
           n = n.toString()
           return n[1] ? n : '0' + n
         })
@@ -242,7 +300,7 @@ export default {
       this.$dialog
         .confirm({
           title: '确认下单',
-          message: '请确认信息填写无误，下单后无法修改信息'
+          message: '请确认信息填写无误，下单后无法修改信息',
         })
         .then(() => {
           let data = {
@@ -250,17 +308,20 @@ export default {
             contactName: this.addrData.contactName,
             contactMobile: this.addrData.contactMobile,
             contactAddr: this.addrData.contactAddr,
+            lng: this.addrData.lng,
+            lat: this.addrData.lat,
             yyDate: this.form.yyDate,
             yyTime: this.form.yyTime.id,
+            employeeId: this.form.employeeId || 0,
             serviceList: '',
-            isAgree: 1
+            isAgree: 1,
           }
-          axios.post('/api/order/create', data).then(resF => {
+          axios.post('/api/order/create', data).then((resF) => {
             console.log(resF)
             this.showConfirm = false
             if (typeof WeixinJSBridge === 'undefined') {
               this.$toast({
-                message: '请使用微信内置浏览器进行支付'
+                message: '请使用微信内置浏览器进行支付',
               })
             } else {
               WeixinJSBridge.invoke(
@@ -271,13 +332,13 @@ export default {
                   nonceStr: resF.data.nonceStr, // 随机串
                   package: resF.data.package,
                   signType: resF.data.signType, // 微信签名方式：
-                  paySign: resF.data.paySign // 微信签名
+                  paySign: resF.data.paySign, // 微信签名
                 },
-                res => {
+                (res) => {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     this.$router
                       .replace({
-                        name: 'mine'
+                        name: 'mine',
                       })
                       .then(() => {
                         sessionStorage.removeItem('form')
@@ -295,16 +356,16 @@ export default {
         .catch((this.showConfirm = false))
     },
     getData() {
-      axios.get('/api/user/get').then(res => {
+      axios.get('/api/user/get').then((res) => {
         this.userInfo = res.data
       })
-    }
+    },
   },
   created() {
     if (!sessionStorage.getItem('token')) {
       sessionStorage.setItem('jump', 'coupon')
       this.$router.replace({
-        name: 'index'
+        name: 'index',
       })
       return
     }
@@ -318,7 +379,7 @@ export default {
     // document.title = '我的优惠券'
     this.getData()
     this.form.maxDate = this.funDate(7)
-  }
+  },
 }
 </script>
 

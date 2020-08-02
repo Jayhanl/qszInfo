@@ -56,6 +56,7 @@
         <van-form ref="confirm" @submit="onConfirm">
           <van-field
             readonly
+            class="require"
             :value="addrData.remark"
             label="地址标签"
             placeholder="点击选择地址"
@@ -65,6 +66,7 @@
           <van-field
             readonly
             clickable
+            class="require"
             :value="form.yyDate"
             label="预约日期"
             placeholder="点击选择预约日期"
@@ -74,11 +76,18 @@
           <van-field
             readonly
             clickable
+            class="require"
             :value="form.yyTime.text"
             label="预约时间"
             placeholder="点击选择预约时间"
             :rules="[{ required: true, message: '请选择预约时间' }]"
             @click="showTime = true"
+          />
+          <van-field
+            v-model="form.employeeId"
+            label="指定师傅"
+            maxlength="10"
+            placeholder="请输入师傅编号(选填)"
           />
           <div class="btnRow">
             <van-button class="cancel" round native-type="button" @click="showConfirm = false">取消</van-button>
@@ -108,7 +117,7 @@ import tabBar from '@/components/tabbar.vue'
 export default {
   name: 'service',
   components: {
-    tabBar
+    tabBar,
   },
   data() {
     return {
@@ -119,7 +128,8 @@ export default {
         maxDate: '',
         yyDate: '',
         yyTime: {},
-        isAgree: 0
+        isAgree: 0,
+        employeeId:''
       },
       addrData: {},
       combo: 0,
@@ -127,129 +137,133 @@ export default {
       columnsTime: [
         {
           id: 9,
-          text: '9点'
+          text: '9点',
         },
         {
           id: 10,
-          text: '10点'
+          text: '10点',
         },
         {
           id: 11,
-          text: '11点'
+          text: '11点',
         },
         {
           id: 12,
-          text: '12点'
+          text: '12点',
         },
         {
           id: 13,
-          text: '13点'
+          text: '13点',
         },
         {
           id: 14,
-          text: '14点'
+          text: '14点',
         },
         {
           id: 15,
-          text: '15点'
+          text: '15点',
         },
         {
           id: 16,
-          text: '16点'
+          text: '16点',
         },
         {
           id: 17,
-          text: '17点'
+          text: '17点',
         },
         {
           id: 18,
-          text: '18点'
+          text: '18点',
         },
         {
           id: 19,
-          text: '19点'
-        }
+          text: '19点',
+        },
+        {
+          id: 20,
+          text: '20点',
+        },
       ],
       columnsMember: [
         {
           id: 11,
           num: 0,
           choice: false,
-          price: 10,
+          price: 9.9,
           name: '碗碟清洗',
-          text: '10元/次',
-          tips: ''
+          text: '9.9元/次',
+          tips: '',
         },
-        {
-          id: 1,
-          num: 0,
-          choice: false,
-          price: 100,
-          name: '通厕所',
-          text: '100元(包通成)',
-          tips: ''
-        },
-        {
-          id: 2,
-          num: 0,
-          choice: false,
-          price: 70,
-          name: '管道疏通',
-          text: '70元',
-          tips: ''
-        },
-        {
-          id: 3,
-          num: 0,
-          choice: false,
-          price: 60,
-          name: '水龙头花洒安装',
-          text: '60元/个任务',
-          tips: '1小时内(不含物料)'
-        },
-        {
-          id: 4,
-          num: 0,
-          choice: false,
-          price: 80,
-          name: '桌椅柜门窗维护',
-          text: '80元/个任务',
-          tips: ''
-        },
-        {
-          id: 5,
-          num: 0,
-          choice: false,
-          price: 100,
-          name: '桌椅柜安装',
-          text: '100元/个任务',
-          tips: '(3个内)'
-        },
-        {
-          id: 6,
-          num: 0,
-          choice: false,
-          price: 30,
-          name: '换灯泡',
-          text: '30元/个灯泡',
-          tips: '(不含物料)'
-        },
-        {
-          id: 7,
-          num: 0,
-          choice: false,
-          price: 60,
-          name: '照明设备安装',
-          text: '60元/套',
-          tips: ''
-        },
+        // {
+        //   id: 1,
+        //   num: 0,
+        //   choice: false,
+        //   price: 100,
+        //   name: '通厕所',
+        //   text: '100元(包通成)',
+        //   tips: ''
+        // },
+        // {
+        //   id: 2,
+        //   num: 0,
+        //   choice: false,
+        //   price: 70,
+        //   name: '管道疏通',
+        //   text: '70元',
+        //   tips: ''
+        // },
+        // {
+        //   id: 3,
+        //   num: 0,
+        //   choice: false,
+        //   price: 60,
+        //   name: '水龙头花洒安装',
+        //   text: '60元/个任务',
+        //   tips: '1小时内(不含物料)'
+        // },
+        // {
+        //   id: 4,
+        //   num: 0,
+        //   choice: false,
+        //   price: 80,
+        //   name: '桌椅柜门窗维护',
+        //   text: '80元/个任务',
+        //   tips: ''
+        // },
+        // {
+        //   id: 5,
+        //   num: 0,
+        //   choice: false,
+        //   price: 100,
+        //   name: '桌椅柜安装',
+        //   text: '100元/个任务',
+        //   tips: '(3个内)'
+        // },
+        // {
+        //   id: 6,
+        //   num: 0,
+        //   choice: false,
+        //   price: 30,
+        //   name: '换灯泡',
+        //   text: '30元/个灯泡',
+        //   tips: '(不含物料)'
+        // },
+        // {
+        //   id: 7,
+        //   num: 0,
+        //   choice: false,
+        //   price: 60,
+        //   name: '照明设备安装',
+        //   text: '60元/套',
+        //   tips: ''
+        // },
         {
           id: 8,
           num: 0,
           price: 65,
           name: '搬运',
           text: '65元/人/小时',
-          tips: ''
+          tips: '',
         },
         {
           id: 9,
@@ -258,25 +272,34 @@ export default {
           price: 29.9,
           name: '家居整理清洁',
           text: '29.9元/小时',
-          tips: '(不含家电清洗及家具清洁)'
+          tips: '(不含家电清洗及家具清洁)',
         },
         {
-          id: 10,
+          id: 12,
           num: 0,
           choice: false,
-          price: 30,
-          name: '汽车外部清洗',
-          text: '30元/次',
-          tips: ''
-        }
-      ]
+          price: 9.9,
+          name: '晾衣服',
+          text: '9.9元/次',
+          tips: '',
+        },
+        // {
+        //   id: 10,
+        //   num: 0,
+        //   choice: false,
+        //   price: 30,
+        //   name: '汽车外部清洗',
+        //   text: '30元/次',
+        //   tips: ''
+        // }
+      ],
     }
   },
   methods: {
     //前往地址列表
     goAddr() {
       this.$router.push({
-        name: 'addr_list'
+        name: 'addr_list',
       })
       sessionStorage.setItem(
         'columnsMember',
@@ -325,8 +348,8 @@ export default {
       // if (index !== undefined) this.columnsMember[index].choice = true
       let sum = 0
       this.columnsMember
-        .filter(item => item.id === this.combo)
-        .forEach(item => {
+        .filter((item) => item.id === this.combo)
+        .forEach((item) => {
           sum += this.accMul(item.num, item.price)
         })
       this.totalPrice = sum
@@ -354,7 +377,7 @@ export default {
       var month = date.getMonth() + 1
       var day = date.getDate()
       return [year, month, day]
-        .map(n => {
+        .map((n) => {
           n = n.toString()
           return n[1] ? n : '0' + n
         })
@@ -379,7 +402,7 @@ export default {
         this.$toast('请阅读并同意协议')
         return false
       }
-      let arr = this.columnsMember.filter(item => item.id === this.combo)
+      let arr = this.columnsMember.filter((item) => item.id === this.combo)
       if (arr.length === 0 || (arr.length === 1 && arr[0].num === 0)) {
         this.$toast('请至少选择一项服务')
         return false
@@ -395,15 +418,15 @@ export default {
       this.$dialog
         .confirm({
           title: '确认下单',
-          message: '请确认信息填写无误，下单后无法修改信息'
+          message: '请确认信息填写无误，下单后无法修改信息',
         })
         .then(() => {
           let list = this.columnsMember
-            .filter(item => item.id === this.combo)
-            .map(item => {
+            .filter((item) => item.id === this.combo)
+            .map((item) => {
               return (item = {
                 service_id: item.id,
-                num: item.num
+                num: item.num,
               })
             })
           console.log(list)
@@ -412,17 +435,20 @@ export default {
             contactName: this.addrData.contactName,
             contactMobile: this.addrData.contactMobile,
             contactAddr: this.addrData.contactAddr,
+            lng: this.addrData.lng,
+            lat: this.addrData.lat,
             yyDate: this.form.yyDate,
             yyTime: this.form.yyTime.id,
+            employeeId: this.form.employeeId||0,
             serviceList: list,
-            isAgree: this.form.isAgree ? 1 : 0
+            isAgree: this.form.isAgree ? 1 : 0,
           }
-          axios.post('/api/order/create', data).then(resF => {
+          axios.post('/api/order/create', data).then((resF) => {
             console.log(resF)
             this.showConfirm = false
             if (typeof WeixinJSBridge === 'undefined') {
               this.$toast({
-                message: '请使用微信内置浏览器进行支付'
+                message: '请使用微信内置浏览器进行支付',
               })
             } else {
               WeixinJSBridge.invoke(
@@ -433,13 +459,13 @@ export default {
                   nonceStr: resF.data.nonceStr, // 随机串
                   package: resF.data.package,
                   signType: resF.data.signType, // 微信签名方式：
-                  paySign: resF.data.paySign // 微信签名
+                  paySign: resF.data.paySign, // 微信签名
                 },
-                res => {
+                (res) => {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     this.$router
                       .replace({
-                        name: 'mine'
+                        name: 'mine',
                       })
                       .then(() => {
                         this.$toast.success('购买成功')
@@ -457,13 +483,13 @@ export default {
           })
         })
         .catch((this.showConfirm = false))
-    }
+    },
   },
   created() {
     if (!sessionStorage.getItem('token')) {
       sessionStorage.setItem('url', 'service')
       this.$router.replace({
-        name: 'index'
+        name: 'index',
       })
       return
     }
@@ -481,7 +507,7 @@ export default {
     this.form.maxDate = this.funDate(7)
     document.title = '市井&轻松装'
   },
-  destroyed() {}
+  destroyed() {},
 }
 </script>
 

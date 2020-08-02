@@ -32,27 +32,22 @@
       <van-field
         readonly
         clickable
-        :value="form.plot"
-        label="小区"
+        :value="form.plot.text"
+        label="所在小区"
         placeholder="点击选择小区"
         :rules="[{ required: true, message: '请选择小区' }]"
         @click="showPlot = true"
       />
       <van-popup v-model="showPlot" position="bottom">
-        <van-picker
-          show-toolbar
-          :columns="columnsPlot"
-          @confirm="onPlot"
-          @cancel="showPlot = false"
-        />
+        <van-picker show-toolbar :columns="sqList" @confirm="onPlot" @cancel="showPlot = false" />
       </van-popup>
       <van-field
         v-model="form.contactAddr"
         type="textarea"
-        label="详细地址"
+        label="楼层单元"
         maxlength="100"
-        placeholder="请输入详细地址"
-        :rules="[{ required: true, message: '请填写详细地址' }]"
+        placeholder="如：x栋x单元x房"
+        :rules="[{ required: true, message: '请填写所在小区的楼层单元' }]"
       />
       <van-field
         v-model="form.remark"
@@ -77,7 +72,7 @@ import navbar from '@/components/navbar.vue'
 export default {
   name: 'addr_add',
   components: {
-    navbar
+    navbar,
   },
   data() {
     return {
@@ -86,8 +81,11 @@ export default {
       showPlot: false,
       chosenAddressId: '1',
       dataList: [],
-      form: {},
-      columnsPlot: ['珠江帝景', '鸿景花园', '泊雅湾', '利安花园']
+      sqList: {},
+      form: {
+        plot: {},
+      },
+      columnsPlot: ['珠江帝景', '鸿景花园', '泊雅湾', '利安花园'],
     }
   },
   methods: {
@@ -97,54 +95,63 @@ export default {
       this.showArea = false
     },
     onPlot(e) {
+      console.log(e)
       this.form.plot = e
       this.showPlot = false
-    },
-    onChangeDetail(val) {
-      if (val) {
-        this.searchResult = [
-          {
-            name: '黄龙万科中心',
-            address: '杭州市西湖区'
-          }
-        ]
-      } else {
-        this.searchResult = []
-      }
     },
     onAdd() {
       axios
         .post('/api/address/create', {
           contactName: this.form.contactName,
           contactMobile: this.form.contactMobile,
+          lng: this.form.plot.lng,
+          lat: this.form.plot.lat,
           contactAddr:
-            this.form.area + ',' + this.form.plot + ',' + this.form.contactAddr,
-          remark: this.form.remark
+            this.form.area +
+            ',' +
+            this.form.plot.text +
+            ',' +
+            this.form.contactAddr,
+          remark: this.form.remark,
         })
-        .then(res => {
+        .then((res) => {
           this.$router
             .replace({
-              name: 'addr_list'
+              name: 'addr_list',
             })
             .then(this.$toast.success('添加成功'))
         })
     },
     getData() {
-      axios.get('/api/address/list').then(res => {
+      axios.get('/api/address/list').then((res) => {
         this.dataList = res.data
       })
-    }
+    },
+    getSq() {
+      axios
+        .get('/api/data/housing', {
+          params: {
+            province: '广东省',
+            city: '广州市',
+            county: '海珠区',
+          },
+        })
+        .then((res) => {
+          this.sqList = res.data
+        })
+    },
   },
   created() {
     // document.title = '添加地址'
     // this.getData()
-  }
+    this.getSq()
+  },
 }
 </script>
 
 <style scoped lang="less">
 .addr_add {
-  margin-top: 40px;
+  // margin-top: 40px;
   .btn {
     margin-top: 20px;
     padding: 10px 20px 30px 20px;

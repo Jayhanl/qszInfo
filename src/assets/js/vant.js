@@ -26,7 +26,9 @@ import {
   Calendar,
   Tabs,
   Tab,
-  NavBar
+  NavBar,
+  RadioGroup,
+  Radio
 } from 'vant'
 
 Vue.use(Button)
@@ -56,3 +58,5 @@ Vue.use(Calendar)
 Vue.use(Tab)
 Vue.use(Tabs)
 Vue.use(NavBar)
+Vue.use(RadioGroup)
+Vue.use(Radio)

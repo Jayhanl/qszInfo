@@ -55,6 +55,11 @@ export default new Router({
     component: () => import('@/view/mine/coupon.vue')
   },
   {
+    path: '/coupon_free',
+    name: 'coupon_free',
+    component: () => import('@/view/mine/coupon_free.vue')
+  },
+  {
     path: '/addr_list',
     name: 'addr_list',
     component: () => import('@/view/mine/addr_list.vue')

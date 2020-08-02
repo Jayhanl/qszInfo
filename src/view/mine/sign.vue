@@ -3,14 +3,14 @@
     <navbar title="每日签到" />
     <div class="mine_sign">
       <button :class="['btn',isSign?'active':'']" @click="onSign">
-        <span>{{isSign?'您已':'点击'}}</span>
-        <span>签到</span>
+        <span>{{isSign?'您&nbsp;&nbsp;&nbsp;已':'点&nbsp;&nbsp;&nbsp;击'}}</span>
+        <span>签&nbsp;&nbsp;&nbsp;到</span>
       </button>
       <div class="instructions">
         <p class="title">
           <img src="@/assets/images/sign.png" alt /> 签到说明：
         </p>
-        <p>1、每天限前20名签到的用户将会获得碗碟清洗优惠券；</p>
+        <p>1、每天限前2000名签到的用户将会获得碗碟清洗优惠券；</p>
         <p>2、原价10元的碗碟清洗服务，使用优惠券仅1.99元/次！</p>
       </div>
     </div>
@@ -51,6 +51,7 @@ export default {
   },
   created() {
     if (!sessionStorage.getItem('token')) {
+      sessionStorage.setItem('jump', 'sign')
       this.$router.replace({
         name: 'index'
       })
@@ -78,8 +79,8 @@ export default {
     margin-top: 100px;
     width: 110px;
     font-size: 22px;
-    letter-spacing: 10px;
-    padding-left: 15px;
+    // letter-spacing: 10px;
+    // padding-left: 15px;
     height: 110px;
     background-color: #2d4f98;
     color: #fff;

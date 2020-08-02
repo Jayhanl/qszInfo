@@ -29,8 +29,16 @@
         v-for="item in dataD.serviceList"
         :key="item.serviceId"
         :title="item.serviceName"
-        :value="item.num"
+        :value="item.num+item.unit"
       />
+    </van-cell-group>
+    <p v-if="dataD.orderStatus>=2" class="title">师傅信息</p>
+    <van-cell-group v-if="dataD.orderStatus>=2">
+      <van-cell title="师傅姓名:" :value="dataD.name" />
+      <van-cell v-if="dataD.orderStatus<5" title="联系电话:" :value="dataD.account" />
+      <van-cell v-if="dataD.toGoTime" title="开始上门:" :value="dataD.toGoTime" />
+      <van-cell v-if="dataD.arriveTime" title="到达时间:" :value="dataD.arriveTime" />
+      <van-cell v-if="dataD.doneTime" title="完成时间:" :value="dataD.doneTime" />
     </van-cell-group>
   </div>
 </template>
@@ -42,12 +50,12 @@ import navbar from '@/components/navbar.vue'
 export default {
   name: 'orderDetail',
   components: {
-    navbar
+    navbar,
   },
   data() {
     return {
       id: '',
-      dataD: {}
+      dataD: {},
     }
   },
   methods: {
@@ -55,22 +63,22 @@ export default {
       axios
         .get('/api/order/detail', {
           params: {
-            id: this.id
-          }
+            id: this.id,
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.dataD = res.data
         })
     },
     onCopy(e) {
       this.$toast.success('复制成功')
-    }
+    },
   },
   created() {
     this.id = this.$route.params.id
     this.getData()
     // document.title = '订单详情'
-  }
+  },
 }
 </script>
 

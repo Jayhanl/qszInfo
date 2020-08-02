@@ -41,6 +41,14 @@
             type="primary"
           >{{codeText}}</van-button>
         </van-field>
+        <van-field label="赠送优惠券">
+          <template #input>
+            <van-radio-group v-model="form.discountSelect" direction="horizontal">
+              <van-radio :name="1">1小时保洁体验券</van-radio>
+              <van-radio :name="2">2小时保洁半价券</van-radio>
+            </van-radio-group>
+          </template>
+        </van-field>
         <van-field v-model="form.employeeId" label="推荐码" maxlength="19" placeholder="请填写推荐码" />
         <van-checkbox
           class="user_agreement"
@@ -68,7 +76,6 @@
 </template>
 
 <script>
-import { Dialog } from 'vant'
 import axios from 'axios'
 export default {
   name: 'register',
@@ -80,6 +87,7 @@ export default {
         contactMobile: '',
         code: '',
         employeeId: '',
+        discountSelect: 1,
         isAgree: 0
       },
       timer: '', //定时器
@@ -140,7 +148,7 @@ export default {
         this.$toast('请阅读并同意协议')
         return false
       }
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '用户注册',
         message: '请确认信息填写无误，注册成功后无法修改信息'
       })
@@ -149,6 +157,7 @@ export default {
             contactName: this.form.contactName,
             contactMobile: this.form.contactMobile,
             code: this.form.code,
+            discountSelect: this.form.discountSelect,
             isAgree: this.form.isAgree ? 1 : 0,
             employeeId: this.form.employeeId || 0
           }
@@ -188,4 +197,7 @@ export default {
 
 <style scoped lang="less">
 @import url('../../assets/css/form.less');
+.van-radio--horizontal {
+  margin-bottom: 8px;
+}
 </style>

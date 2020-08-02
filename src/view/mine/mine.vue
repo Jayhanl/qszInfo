@@ -1,9 +1,15 @@
 <template>
-  <div class="mine_contanier">
+  <div class="mine_contanier margin-bottom">
     <div class="me">
       <div class="userinfo">
         <div class="userinfo_avatar">
-          <van-image round fit="cover" width="100%" height="100%" :src="require('@/assets/images/logo-min.png')" />
+          <van-image
+            round
+            fit="cover"
+            width="100%"
+            height="100%"
+            :src="require('@/assets/images/logo-min.png')"
+          />
         </div>
         <div class="userinfo_grade">
           <!-- <van-tag v-if="userInfo.vip_code" type="warning">VIP</van-tag> -->
@@ -21,22 +27,22 @@
     <div class="mine_order">
       <van-cell title="我的订单" icon="logistics" is-link @click="goOrder" />
       <div class="list">
-        <router-link :to="{name:'order',params:{status:'0'}}" class="detail">
+        <!-- <router-link :to="{name:'order',params:{status:'0'}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="balance-list-o" />
           <span>未付款</span>
-        </router-link>
-        <router-link :to="{name:'order',params:{status:'1'}}" class="detail">
+        </router-link>-->
+        <router-link :to="{name:'order',params:{status:0}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="todo-list-o" />
-          <span>待派遣</span>
+          <span>进行中</span>
         </router-link>
-        <router-link :to="{name:'order',params:{status:'3'}}" class="detail">
+        <router-link :to="{name:'order',params:{status:1}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="completed" />
           <span>已完成</span>
         </router-link>
-        <router-link :to="{name:'order',params:{status:'-2'}}" class="detail">
+        <!-- <router-link :to="{name:'order',params:{status:'-2'}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="after-sale" />
           <span>退款中</span>
-        </router-link>
+        </router-link>-->
       </div>
     </div>
     <!-- <router-link :to="{name:'order'}" class="active_container">
@@ -46,7 +52,7 @@
         <span class="active_text_english">My Order</span>
       </div>
       <div class="active_triangle"></div>
-    </router-link> -->
+    </router-link>-->
 
     <router-link :to="{name:'sign'}" class="active_container">
       <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="sign" />
@@ -94,11 +100,11 @@ import tabBar from '@/components/tabbar.vue'
 export default {
   name: 'mine',
   components: {
-    tabBar
+    tabBar,
   },
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
     }
   },
   methods: {
@@ -106,40 +112,38 @@ export default {
       this.$router.push({
         name: `order`,
         params: {
-          status: 'all'
-        }
+          status: 1,
+        },
       })
     },
     goAddr() {
       this.$router.push({
-        name: `addr_list`
+        name: `addr_list`,
       })
       sessionStorage.removeItem('addrChoice')
     },
     getData() {
-      axios
-        .get('/api/user/get')
-        .then(res => {
-          // sessionStorage.setItem('free_num', res.data.free_num)
-          res.data.contactMobile =
-            res.data.contactMobile.substr(0, 3) +
-            '****' +
-            res.data.contactMobile.substr(7)
-          this.userInfo = res.data
-        })
-    }
+      axios.get('/api/user/get').then((res) => {
+        // sessionStorage.setItem('free_num', res.data.free_num)
+        res.data.contactMobile =
+          res.data.contactMobile.substr(0, 3) +
+          '****' +
+          res.data.contactMobile.substr(7)
+        this.userInfo = res.data
+      })
+    },
   },
   created() {
     if (!sessionStorage.getItem('token')) {
       sessionStorage.setItem('jump', 'mine')
       this.$router.replace({
-        name: 'index'
+        name: 'index',
       })
       return
     }
     this.getData()
     document.title = '市井&轻松装'
-  }
+  },
 }
 </script>
 

@@ -52,8 +52,6 @@
         type="textarea"
         label="详细地址"
         maxlength="100"
-        placeholder="请输入详细地址"
-        :rules="[{ required: true, message: '请填写详细地址' }]"
       />
       <van-field
         v-model="form.remark"
@@ -87,7 +85,7 @@ import navbar from '@/components/navbar.vue'
 export default {
   name: 'addr_edit',
   components: {
-    navbar
+    navbar,
   },
   data() {
     return {
@@ -96,8 +94,8 @@ export default {
       showPlot: false,
       chosenAddressId: '1',
       dataList: [],
+      sqList: [],
       form: {},
-      columnsPlot: ['珠江帝景', '鸿景花园', '泊雅湾', '利安花园']
     }
   },
   methods: {
@@ -116,33 +114,37 @@ export default {
           addressId: this.form.addressId,
           contactName: this.form.contactName,
           contactMobile: this.form.contactMobile,
-          contactAddr:
-            this.form.area + ',' + this.form.plot + ',' + this.form.contactAddr,
-          remark: this.form.remark
+          contactAddr: this.form.contactAddr,
+          remark: this.form.remark,
         })
-        .then(res => {
+        .then((res) => {
           this.$router
             .replace({
-              name: 'addr_list'
+              name: 'addr_list',
             })
             .then(this.$toast.success('编辑成功'))
         })
     },
     onDel() {
-      axios
-        .delete('/api/address/delete', {
-          params: {
-            addressId: this.form.addressId
-          }
-        })
-        .then(res => {
-          this.$router
-            .replace({
-              name: 'addr_list'
-            })
-            .then(this.$toast.success('删除成功'))
-        })
-    }
+      this.$dialog.confirm({
+        title: '地址删除',
+        message: '确认要删除该地址吗',
+      }).then(() => {
+        axios
+          .delete('/api/address/delete', {
+            params: {
+              addressId: this.form.addressId,
+            },
+          })
+          .then((res) => {
+            this.$router
+              .replace({
+                name: 'addr_list',
+              })
+              .then(this.$toast.success('删除成功'))
+          })
+      })
+    },
   },
   created() {
     let item = this.$route.params.item
@@ -158,19 +160,19 @@ export default {
     } else {
       this.$router
         .replace({
-          name: 'addr_list'
+          name: 'addr_list',
         })
         .then(() => {
           this.$toast('请重新选择地址')
         })
     }
-  }
+  },
 }
 </script>
 
 <style scoped lang="less">
 .addr_add {
-  margin-top: 40px;
+  // margin-top: 40px;
   .btn_list {
     margin-top: 20px;
     padding: 10px 20px 30px 20px;

@@ -2,13 +2,8 @@
   <div class="order_container">
     <navbar title="我的订单" />
     <van-tabs v-model="orderStatus" @click="onTabs" color="#2d4f98">
-      <van-tab name="all" title="全部"></van-tab>
-      <van-tab name="0" title="未付款"></van-tab>
-      <van-tab name="1" title="待派遣"></van-tab>
-      <van-tab name="2" title="待完成"></van-tab>
-      <van-tab name="3" title="已完成"></van-tab>
-      <van-tab name="-2" title="退款中"></van-tab>
-      <van-tab name="-1" title="已取消"></van-tab>
+      <van-tab :name="1" title="进行中"></van-tab>
+      <van-tab :name="0" title="已结束"></van-tab>
     </van-tabs>
     <van-list
       v-model="isLoading"
@@ -44,6 +39,9 @@
               </div>
             </div>
           </div>
+          <div v-if="item.orderStatus===1" class="orderM_bot">
+            <van-button @click="onCancel(item)" plain round>取消</van-button>
+          </div>
         </div>
       </div>
     </van-list>
@@ -57,17 +55,17 @@ import navbar from '@/components/navbar.vue'
 export default {
   name: 'order',
   components: {
-    navbar
+    navbar,
   },
   data() {
     return {
       logo_img: require('@/assets/images/logo-min.png'),
-      orderStatus: this.$route.params.status || 'all',
+      orderStatus: this.$route.params.status || 1,
       page: 1,
       limit: 8,
       isLoading: false,
       finished: false,
-      dataList: []
+      dataList: [],
     }
   },
   methods: {
@@ -86,14 +84,16 @@ export default {
     getData() {
       let that = this
       axios
-        .get('/api/order/list', {
-          params: {
-            orderStatus: that.orderStatus,
-            limit: that.limit,
-            page: that.page
+        .get(
+          '/api/order/' + (this.orderStatus ? 'ordering_list' : 'ordered_list'),
+          {
+            params: {
+              limit: that.limit,
+              page: that.page,
+            },
           }
-        })
-        .then(function(res) {
+        )
+        .then(function (res) {
           let resD = res.data
           if (resD.length < that.limit) {
             console.log(1)
@@ -110,19 +110,38 @@ export default {
       this.$router.push({
         name: 'order_detail',
         params: {
-          id
-        }
+          id,
+        },
       })
-    }
+    },
+    //取消订单
+    onCancel(item) {
+      this.$dialog.confirm({
+        title: '取消确认',
+        message: '是否确认取消该订单，订单金额将原路返回',
+      }).then(() => {
+        axios
+          .post(
+            '/api/order/cancel',{
+              id: item.id,
+            }
+          )
+          .then(() => {
+            this.$toast.success('操作成功')
+            this.page = 1
+            this.getData()
+          })
+      })
+    },
   },
   created() {
-      console.log(sessionStorage.getItem('token'))
+    console.log(sessionStorage.getItem('token'))
     if (!sessionStorage.getItem('token')) {
       console.log('跳转首页获取token')
       sessionStorage.setItem('url', 'order')
       console.log('ok')
       this.$router.replace({
-        name: 'index'
+        name: 'index',
       })
       return
     }
@@ -131,7 +150,7 @@ export default {
     // this.orderStatus = this.$route.params.status
     this.getData()
     // document.title = '我的订单'
-  }
+  },
 }
 </script>
 
