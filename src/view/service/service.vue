@@ -52,7 +52,7 @@
         </div>
       </van-form>
       <!-- 确认下单弹框 -->
-      <van-dialog v-model="showConfirm" title="标题" :show-confirm-button="false">
+      <van-dialog v-model="showConfirm" title="填写信息" :show-confirm-button="false">
         <van-form ref="confirm" @submit="onConfirm">
           <van-field
             readonly
