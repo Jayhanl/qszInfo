@@ -1,10 +1,10 @@
 <template>
   <div class="form">
     <navbar title="我的优惠券" />
-    <img class="logo" src="@/assets/images/logo.png" />
-    <div class="title">
+    <img class="logo" src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo.png" />
+    <!-- <div class="title">
       <span>轻/装/时/代 无/处/不/在</span>
-    </div>
+    </div>-->
 
     <div v-for="(item,index) in userInfo.bowlDiscountNum" :key="index" class="coupon_item">
       <div class="coupon_left">
@@ -24,10 +24,10 @@
         <span>1小时保洁优惠券</span>
         <span class="price">
           原价：
-          <span class="old">¥ 29.9</span> 折扣后：
-          <span class="new">¥ 14.75</span>
+          <span class="old">¥ 60</span> 折扣后：
+          <span class="new">¥ 30</span>
         </span>
-        <span class="tips">（抵扣14.75元）</span>
+        <span class="tips">（抵扣30元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(4)">立即下单</div>
     </div>
@@ -37,12 +37,25 @@
         <span>2小时保洁优惠券</span>
         <span class="price">
           原价：
-          <span class="old">¥ 59.8</span> 折扣后：
-          <span class="new">¥ 29.9</span>
+          <span class="old">¥ 120</span> 折扣后：
+          <span class="new">¥ 60</span>
         </span>
-        <span class="tips">（抵扣29.9元）</span>
+        <span class="tips">（抵扣60元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(1)">立即下单</div>
+    </div>
+
+    <div v-for="(item,index) in userInfo.cleanTwoHalf" :key="index" class="coupon_item">
+      <div class="coupon_left">
+        <span>第2小时保洁半价券</span>
+        <span class="price">
+          原价：
+          <span class="old">¥ 120</span> 折扣后：
+          <span class="new">¥ 90</span>
+        </span>
+        <span class="tips">（抵扣30元）</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(10)">立即下单</div>
     </div>
 
     <div v-for="(item,index) in userInfo.cleanFreeNum" :key="index" class="coupon_item">
@@ -50,10 +63,10 @@
         <span>1小时保洁体验券</span>
         <span class="price">
           原价：
-          <span class="old">¥ 29.9</span> 折扣后：
+          <span class="old">¥ 60</span> 折扣后：
           <span class="new">¥ 0.01</span>
         </span>
-        <span class="tips">（抵扣29.89元）</span>
+        <span class="tips">（抵扣59.99元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(7)">立即下单</div>
     </div>
@@ -63,12 +76,60 @@
         <span>2小时保洁体验券</span>
         <span class="price">
           原价：
-          <span class="old">¥ 59.8</span> 折扣后：
+          <span class="old">¥ 120</span> 折扣后：
           <span class="new">¥ 1</span>
         </span>
-        <span class="tips">（抵扣58.8元）</span>
+        <span class="tips">（抵扣119元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(8)">立即下单</div>
+    </div>
+
+    <div v-if="userInfo.cleanMfNum" class="coupon_item">
+      <div class="coupon_left">
+        <span>1小时保洁免费券</span>
+        <span class="price">
+          剩余：
+          <span class="new">{{userInfo.cleanMfNum}}</span> 张
+        </span>
+        <span class="tips">(套餐券)</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(9)">立即下单</div>
+    </div>
+
+    <div v-if="userInfo.cleanMfHalfhour" class="coupon_item">
+      <div class="coupon_left">
+        <span>30分钟保洁免费券</span>
+        <span class="price">
+          剩余：
+          <span class="new">{{userInfo.cleanMfHalfhour}}</span> 张
+        </span>
+        <span class="tips">(套餐券)</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(11)">立即下单</div>
+    </div>
+
+    <div v-if="userInfo.cleanMfThree" class="coupon_item">
+      <div class="coupon_left">
+        <span>3小时保洁免费券</span>
+        <span class="price">
+          剩余：
+          <span class="new">{{userInfo.cleanMfThree}}</span> 张
+        </span>
+        <span class="tips">(套餐券)</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(12)">立即下单</div>
+    </div>
+
+    <div v-if="userInfo.cleanMfActivity" class="coupon_item">
+      <div class="coupon_left">
+        <span>1小时保洁免费券</span>
+        <span class="price">
+          剩余：
+          <span class="new">{{userInfo.cleanMfActivity}}</span> 张
+        </span>
+        <span class="tips">(主题活动券)</span>
+      </div>
+      <div class="coupon_right" @click="onShowConfirm(13)">立即下单</div>
     </div>
 
     <!-- <div v-for="(item,index) in userInfo.illDiscountNum" :key="index" class="coupon_item">
@@ -97,7 +158,7 @@
       <div class="coupon_right" @click="onShowConfirm(3)">立即下单</div>
     </div>-->
 
-    <div v-for="(item,index) in userInfo.carryDiscountNum" :key="index" class="coupon_item">
+    <!-- <div v-for="(item,index) in userInfo.carryDiscountNum" :key="index" class="coupon_item">
       <div class="coupon_left">
         <span>搬运优惠券(1人/1小时)</span>
         <span class="price">
@@ -108,11 +169,11 @@
         <span class="tips">（抵扣10元）</span>
       </div>
       <div class="coupon_right" @click="onShowConfirm(6)">立即下单</div>
-    </div>
+    </div>-->
 
     <br />
     <!-- 确认下单弹框 -->
-    <van-dialog v-model="showConfirm" title="标题" :show-confirm-button="false">
+    <van-dialog v-model="showConfirm" title="填写信息" :show-confirm-button="false">
       <van-form ref="confirm" @submit="onConfirm">
         <van-field
           readonly
@@ -260,9 +321,9 @@ export default {
     onTime(value) {
       let date = new Date()
       let hours = date.getHours()
-      if (this.formatTime(date) === this.form.yyDate && value.id <= hours + 1) {
+      if (this.formatTime(date) === this.form.yyDate && value.id <= hours + 2) {
         this.form.yyTime = ''
-        this.$toast('请预约1小时后的时间')
+        this.$toast('请预约2小时后的时间')
         return
       }
       this.form.yyTime = value
@@ -323,11 +384,11 @@ export default {
               this.$toast({
                 message: '请使用微信内置浏览器进行支付',
               })
-            } else {
+            } else if (resF.data.timeStamp) {
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 {
-                  appId: 'wxd6dceeee251fe0ad', // 公众号名称，由商户传入
+                  appId: 'wx65dd7aa40a579725', // 公众号名称，由商户传入
                   timeStamp: resF.data.timeStamp, // 时间戳，自1970年以来的秒数
                   nonceStr: resF.data.nonceStr, // 随机串
                   package: resF.data.package,
@@ -338,18 +399,28 @@ export default {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     this.$router
                       .replace({
-                        name: 'mine',
+                        name: 'order',
                       })
                       .then(() => {
                         sessionStorage.removeItem('form')
                         this.$route.params.item = ''
-                        this.$toast.success('购买成功')
+                        this.$toast.success('下单成功')
                       })
                   } else {
                     this.$toast('支付失败')
                   }
                 }
               )
+            } else {
+              this.$router
+                .replace({
+                  name: 'order',
+                })
+                .then(() => {
+                  sessionStorage.removeItem('form')
+                  this.$route.params.item = ''
+                  this.$toast.success('下单成功')
+                })
             }
           })
         })

@@ -17,29 +17,18 @@
         v-clipboard:copy="dataD.orderId"
       />
       <van-cell title="订单状态:" :value="dataD.orderStatusChina" />
-      <van-cell title="订单价格:" :value="dataD.orderPrice" />
+      <van-cell title="口罩类型:" :value="dataD.goodsName" />
+      <van-cell title="单价:" :value="dataD.unitPrice+'元'" />
+      <van-cell title="购买数量:" :value="dataD.buyNum+'份'" />
+      <van-cell title="订单总计:" :value="dataD.orderPrice+'元'" />
       <van-cell title="下单时间:" :value="dataD.createTime" />
       <van-cell title="付款时间:" :value="dataD.payTime" />
     </van-cell-group>
-    <p class="title">服务信息</p>
+    <p class="title">快递信息</p>
     <van-cell-group>
-      <van-cell title="预约日期:" :value="dataD.yyDate" />
-      <van-cell title="预约时间:" :value="dataD.yyTime+'点'" />
-      <van-cell
-        v-for="item in dataD.serviceList"
-        :key="item.serviceId"
-        :title="item.serviceName"
-        :value="item.num+item.unit"
-      />
-    </van-cell-group>
-    <p v-if="dataD.orderStatus>=2" class="title">师傅信息</p>
-    <van-cell-group v-if="dataD.orderStatus>=2">
-      <van-cell title="师傅编号:" :value="dataD.employeeId" />
-      <van-cell title="师傅姓名:" :value="dataD.name" />
-      <van-cell v-if="dataD.orderStatus<5" title="联系电话:" :value="dataD.account" />
-      <van-cell v-if="dataD.toGoTime" title="开始上门:" :value="dataD.toGoTime" />
-      <van-cell v-if="dataD.arriveTime" title="到达时间:" :value="dataD.arriveTime" />
-      <van-cell v-if="dataD.doneTime" title="完成时间:" :value="dataD.doneTime" />
+      <van-cell title="快递公司:" :value="dataD.kdCompany||'未发货'" />
+      <van-cell title="快递单号:" :value="dataD.kdOrderId||'未发货'" />
+      <van-cell title="发货时间:" :value="dataD.sendTime||'未发货'" />
     </van-cell-group>
   </div>
 </template>
@@ -49,7 +38,7 @@ import axios from 'axios'
 import navbar from '@/components/navbar.vue'
 
 export default {
-  name: 'orderDetail',
+  name: 'maskDetail',
   components: {
     navbar,
   },
@@ -62,7 +51,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get('/api/order/detail', {
+        .get('/api/mask_order/detail', {
           params: {
             id: this.id,
           },

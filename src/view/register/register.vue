@@ -1,9 +1,9 @@
 <template>
   <div class="form">
-    <img class="logo" src="@/assets/images/sjLogo.png" />
-    <div class="title">
+    <img class="logo" src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/sjLogo.png" />
+    <!-- <div class="title">
       <span>轻/装/时/代 无/处/不/在</span>
-    </div>
+    </div>-->
     <div class="form_container">
       <div class="form_title">
         <p>个人信息</p>
@@ -41,22 +41,20 @@
             type="primary"
           >{{codeText}}</van-button>
         </van-field>
-        <van-field label="赠送优惠券">
+        <!-- <van-field label="赠送优惠券">
           <template #input>
             <van-radio-group v-model="form.discountSelect" direction="horizontal">
               <van-radio :name="1">1小时保洁体验券</van-radio>
               <van-radio :name="2">2小时保洁半价券</van-radio>
             </van-radio-group>
           </template>
-        </van-field>
+        </van-field>-->
         <van-field v-model="form.employeeId" label="推荐码" maxlength="19" placeholder="请填写推荐码" />
         <van-checkbox
           class="user_agreement"
           v-model="form.isAgree"
           label-disabled
-          type="digit"
-          maxlength="20"
-          checked-color="#07c160"
+          checked-color="#2d4f98"
         >
           我已经阅读并同意
           <router-link
@@ -88,10 +86,10 @@ export default {
         code: '',
         employeeId: '',
         discountSelect: 1,
-        isAgree: 0
+        isAgree: 0,
       },
       timer: '', //定时器
-      codeText: '获取验证码' //验证码倒计时
+      codeText: '获取验证码', //验证码倒计时
     }
   },
   methods: {
@@ -102,7 +100,7 @@ export default {
     },
     onCancel() {
       this.$router.push({
-        name: 'service'
+        name: 'service',
       })
     },
     onConfirm(value) {
@@ -119,18 +117,18 @@ export default {
       }
       this.$toast.loading({
         message: '加载中...',
-        forbidClick: true
+        forbidClick: true,
       })
       axios
         .get('/api/login/get_register_code', {
           params: {
-            mobile: mobile
-          }
+            mobile: mobile,
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.$toast.success('发送成功！')
           let time = 60
-          this.timer = setInterval(res => {
+          this.timer = setInterval((res) => {
             time -= 1
             console.log(time)
             this.codeText = `${time}秒后重试`
@@ -148,50 +146,52 @@ export default {
         this.$toast('请阅读并同意协议')
         return false
       }
-      this.$dialog.confirm({
-        title: '用户注册',
-        message: '请确认信息填写无误，注册成功后无法修改信息'
-      })
+      this.$dialog
+        .confirm({
+          title: '用户注册',
+          message: '请确认信息填写无误，注册成功后无法修改信息',
+        })
         .then(() => {
           let data = {
             contactName: this.form.contactName,
             contactMobile: this.form.contactMobile,
             code: this.form.code,
-            discountSelect: this.form.discountSelect,
+            // discountSelect: this.form.discountSelect,
             isAgree: this.form.isAgree ? 1 : 0,
-            employeeId: this.form.employeeId || 0
+            employeeId: this.form.employeeId || 0,
           }
-          axios.put('/api/user/update_base_info', data).then(resF => {
+          axios.put('/api/user/update_base_info', data).then((resF) => {
             console.log(resF)
             this.$router
               .replace({
-                name: 'mine'
+                name: 'mine',
               })
               .then(() => {
+                this.timer = ''
                 localStorage.removeItem('employeeId')
                 this.$router
                   .push({
-                    name: 'coupon'
+                    name: 'coupon',
                   })
                   .then(this.$toast.success('注册成功'))
               })
           })
         })
         .catch()
-    }
+    },
   },
   created() {
-    if(localStorage.getItem('employeeId'))
+    if (localStorage.getItem('employeeId'))
       this.form.employeeId = parseInt(localStorage.getItem('employeeId'))
     console.log(localStorage.getItem('employeeId'))
     document.title = '市井会员'
     if (!sessionStorage.getItem('token')) {
       this.$router.replace({
-        name: 'index'
+        name: 'index',
       })
       return
     }
-  }
+  },
 }
 </script>
 

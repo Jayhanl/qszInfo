@@ -1,8 +1,9 @@
 <template>
   <div>
     <van-tabbar z-index="999" route>
-      <van-tabbar-item replace to="/demand" icon="manager-o">管家</van-tabbar-item>
-      <van-tabbar-item replace to="/service" icon="orders-o">服务</van-tabbar-item>
+      <van-tabbar-item replace to="/shop" icon="gift-o">优惠活动</van-tabbar-item>
+      <van-tabbar-item replace to="/company_clean" icon="desktop-o">办公保洁</van-tabbar-item>
+      <van-tabbar-item replace to="/service" icon="orders-o">家政服务</van-tabbar-item>
       <van-tabbar-item replace to="/mine" icon="user-circle-o">我的</van-tabbar-item>
     </van-tabbar>
   </div>

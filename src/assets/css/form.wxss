@@ -1,0 +1,205 @@
+.margin-bottom {
+  margin-bottom: 50px;
+}
+.padding-bottom {
+  padding-bottom: 50px;
+}
+.form {
+  text-align: center;
+  background-image: url('https://qjz.oss-cn-shenzhen.aliyuncs.com/images/bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  min-height: 100vh;
+}
+.form .form_container {
+  width: 94vw;
+  margin: 0px auto 30px;
+  box-shadow: #e0e0e0 0 0 20px;
+  border-radius: 22px;
+  background-color: #fff;
+}
+.form .form_container .form_title {
+  font-size: 22px;
+  color: #2d4f98;
+  border-bottom: 1px dashed #eee;
+  padding: 30px 0;
+  margin: 0 16px;
+}
+.form .form_container .form_title p {
+  margin: 0;
+}
+.form .form_container .form_title p:first-of-type {
+  font-size: 26px;
+  letter-spacing: 2px;
+  margin-left: 2px;
+  font-weight: bold;
+}
+.form .form_container .van-cell {
+  line-height: 28px;
+}
+.form .form_container .title span {
+  border-bottom: 1px #000 solid;
+  padding: 2px 0;
+}
+.form .form_container .tips {
+  font-size: 12px;
+  color: #666;
+}
+.form .form_container .form_price {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px;
+}
+.form .form_container .form_price .price {
+  color: #f40;
+  font-size: 20px;
+}
+.form .form_container .btn {
+  padding: 10px 20px 30px 20px;
+}
+.form .form_container .btn button {
+  background-color: #2d4f98;
+  border-color: #2d4f98;
+}
+.form .form_container .btn button::after {
+  border: none;
+}
+.form .form_container .van-cell:not(:last-child)::after {
+  right: 16px;
+}
+.form .form_container h3 {
+  color: #2d4f98;
+}
+.form .form_container .member_combo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.form .form_container .member_combo .item {
+  border-radius: 2px;
+  border: 2px solid #eee;
+  width: 42%;
+  margin: 10px 0;
+  padding: 10px 0;
+  font-size: 16px;
+  min-height: 91px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+.form .form_container .member_combo .item > span {
+  display: block;
+  margin: 2px 0;
+}
+.form .form_container .member_combo .item > span .price {
+  color: #f40;
+  font-size: 23px;
+}
+.form .form_container .member_combo .item .cont {
+  display: flex;
+  flex-direction: column;
+}
+.form .form_container .member_combo .item .cont .name {
+  color: #2d4f98;
+  font-weight: bold;
+  font-size: 18px;
+}
+.form .form_container .member_combo .item .cont .tips {
+  color: #777;
+  font-size: 12px;
+}
+.form .form_container .member_combo .item .num {
+  margin-top: 5px;
+}
+.form .form_container .member_combo .active {
+  border: 2px solid #2d4f98;
+  background-color: rgba(45, 79, 152, 0.1);
+}
+.form .form_container .user_agreement {
+  margin: 10px 16px;
+  font-size: 12px;
+}
+.form .form_container .user_agreement .agreement {
+  color: #2d4f98;
+}
+.form .btnRow {
+  padding: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: row;
+}
+.form .btnRow button {
+  width: 40%;
+  margin: 0 auto;
+}
+.form .btnRow .confirm {
+  background-color: #2d4f98;
+  border-color: #2d4f98;
+}
+.form .btnRow .cancel {
+  background-color: #fff;
+  border: 1px solid #eee;
+}
+.form .btnRow .confirm::after {
+  border: none;
+}
+.form .logo {
+  width: 280px;
+  margin-top: 5vh;
+  /* margin-bottom: 1vh; */
+}
+.form .title {
+  color: #000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 6px;
+}
+.form .coupon_item {
+  width: 90%;
+  margin: 15px auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70px;
+  border-radius: 8px;
+  box-shadow: 3px 4px 4px #f0f0f0;
+  color: #0c0c0c;
+  padding: 10px 0;
+}
+.form .coupon_left {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  margin-left: 20px;
+}
+.form .coupon_left span:first-of-type {
+  font-weight: bold;
+}
+.form .coupon_left .price {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+.form .coupon_left .price .old {
+  text-decoration: line-through;
+  color: #666;
+  margin-right: 5px;
+}
+.form .coupon_left .price .new {
+  color: #f40;
+}
+.form .coupon_left .tips {
+  margin-top: 2px;
+  font-size: 12px;
+  color: #666;
+}
+.form .coupon_right {
+  margin-right: 20px;
+  color: #2d4f98;
+  font-weight: bold;
+}

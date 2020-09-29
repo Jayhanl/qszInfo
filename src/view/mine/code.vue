@@ -39,7 +39,7 @@ export default {
       return
     }
     this.getData()
-    document.title = '市井&轻松装'
+    document.title = '市井&轻家政'
   }
 }
 </script>

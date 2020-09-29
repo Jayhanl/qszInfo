@@ -8,12 +8,12 @@
             fit="cover"
             width="100%"
             height="100%"
-            :src="require('@/assets/images/logo-min.png')"
+            src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo-min.png"
           />
         </div>
         <div class="userinfo_grade">
           <!-- <van-tag v-if="userInfo.vip_code" type="warning">VIP</van-tag> -->
-          <span>{{userInfo.mobile||'轻松装'}}</span>
+          <span>{{userInfo.mobile||'轻家政'}}</span>
         </div>
         <!-- <router-link :to="{name:'tips',params:{free:userInfo.free_num}}" class="tips_img">
           <van-icon color="#fff" size="24" name="question-o" />
@@ -25,7 +25,7 @@
     </div>
 
     <div class="mine_order">
-      <van-cell title="我的订单" icon="logistics" is-link @click="goOrder" />
+      <van-cell title="服务订单" icon="logistics" is-link @click="goOrder" />
       <div class="list">
         <!-- <router-link :to="{name:'order',params:{status:'0'}}" class="detail">
           <van-icon size="30" style="padding: 8px;" color="#2d4f98" name="balance-list-o" />
@@ -45,29 +45,21 @@
         </router-link>-->
       </div>
     </div>
-    <!-- <router-link :to="{name:'order'}" class="active_container">
-      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="description" />
-      <div class="active_text">
-        <span>我的订单</span>
-        <span class="active_text_english">My Order</span>
-      </div>
-      <div class="active_triangle"></div>
-    </router-link>-->
-
-    <router-link :to="{name:'sign'}" class="active_container">
+    <!-- <router-link :to="{name:'sign'}" class="active_container">
       <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="sign" />
       <div class="active_text">
         <span>每日签到</span>
         <span class="active_text_english">Daily Attendance</span>
       </div>
       <div class="active_triangle"></div>
-    </router-link>
+    </router-link> -->
 
-    <router-link :to="{name:'code'}" class="active_container">
-      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="qr" />
+
+    <router-link :to="{name:'company_clean_order'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="desktop-o" />
       <div class="active_text">
-        <span>我的二维码</span>
-        <span class="active_text_english">My Qr Code</span>
+        <span>办公保洁订单</span>
+        <span class="active_text_english">Office Cleaning Order</span>
       </div>
       <div class="active_triangle"></div>
     </router-link>
@@ -89,6 +81,43 @@
       </div>
       <div class="active_triangle"></div>
     </router-link>
+
+    <router-link :to="{name:'coupon_order'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="discount" />
+      <div class="active_text">
+        <span>优惠券订单</span>
+        <span class="active_text_english">Coupon Order</span>
+      </div>
+      <div class="active_triangle"></div>
+    </router-link>
+
+    <router-link :to="{name:'code'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="qr" />
+      <div class="active_text">
+        <span>我的二维码</span>
+        <span class="active_text_english">My Qr Code</span>
+      </div>
+      <div class="active_triangle"></div>
+    </router-link>
+    
+    <router-link :to="{name:'mask_order'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="description" />
+      <div class="active_text">
+        <span>口罩订单</span>
+        <span class="active_text_english">Mask Order</span>
+      </div>
+      <div class="active_triangle"></div>
+    </router-link>
+    
+    <router-link :to="{name:'contect'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="phone-o" />
+      <div class="active_text">
+        <span>联系我们</span>
+        <span class="active_text_english">Connect Us</span>
+      </div>
+      <div class="active_triangle"></div>
+    </router-link>
+    <br />
     <tabBar></tabBar>
   </div>
 </template>
@@ -142,7 +171,7 @@ export default {
       return
     }
     this.getData()
-    document.title = '市井&轻松装'
+    document.title = '市井&轻家政'
   },
 }
 </script>

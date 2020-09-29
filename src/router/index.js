@@ -20,6 +20,16 @@ export default new Router({
     component: () => import('@/view/steward/demand.vue')
   },
   {
+    path: '/shop',
+    name: 'shop',
+    component: () => import('@/view/shop/shop.vue')
+  },
+  {
+    path: '/company_clean',
+    name: 'company_clean',
+    component: () => import('@/view/company/clean.vue')
+  },
+  {
     path: '/service',
     name: 'service',
     component: () => import('@/view/service/service.vue')
@@ -50,6 +60,31 @@ export default new Router({
     component: () => import('@/view/mine/order_detail.vue')
   },
   {
+    path: '/mask_order',
+    name: 'mask_order',
+    component: () => import('@/view/mine/mask_order.vue')
+  },
+  {
+    path: '/mask_detail',
+    name: 'mask_detail',
+    component: () => import('@/view/mine/mask_detail.vue')
+  },
+  {
+    path: '/coupon_order',
+    name: 'coupon_order',
+    component: () => import('@/view/mine/coupon_order.vue')
+  },
+  {
+    path: '/company_clean_order',
+    name: 'company_clean_order',
+    component: () => import('@/view/mine/company_clean_order.vue')
+  },
+  {
+    path: '/company_clean_detail',
+    name: 'company_clean_detail',
+    component: () => import('@/view/mine/company_clean_detail.vue')
+  },
+  {
     path: '/coupon',
     name: 'coupon',
     component: () => import('@/view/mine/coupon.vue')
@@ -77,12 +112,17 @@ export default new Router({
   {
     path: '/agreement_user',
     name: 'agreement_user',
-    component: () => import('@/view/agreement_user.vue')
+    component: () => import('@/view/functional/agreement_user.vue')
   },
   {
     path: '/agreement_qsz',
     name: 'agreement_qsz',
-    component: () => import('@/view/agreement_qsz.vue')
+    component: () => import('@/view/functional/agreement_qsz.vue')
+  },
+  {
+    path: '/contect',
+    name: 'contect',
+    component: () => import('@/view/functional/contect.vue')
   }
   ]
 })

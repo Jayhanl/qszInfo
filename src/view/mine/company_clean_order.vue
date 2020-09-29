@@ -1,9 +1,11 @@
 <template>
   <div class="order_container">
-    <navbar title="服务订单" />
+    <navbar title="办公保洁订单" />
     <van-tabs v-model="orderStatus" @click="onTabs" color="#2d4f98">
-      <van-tab :name="1" title="进行中"></van-tab>
-      <van-tab :name="0" title="已结束"></van-tab>
+      <van-tab :name="0" title="未付款"></van-tab>
+      <van-tab :name="1" title="待审核"></van-tab>
+      <van-tab :name="2" title="已通过"></van-tab>
+      <van-tab :name="-1" title="已取消"></van-tab>
     </van-tabs>
     <van-list
       v-model="isLoading"
@@ -15,20 +17,19 @@
     >
       <div class="infoO" v-for="item in dataList" :key="item.orderId">
         <van-cell class :title="item.orderId" :value="item.orderStatusChina" />
-        <div @click="goDetail(item.id)" class="info_item">
+        <div @click="goDetail(item)" class="info_item">
           <van-image
             fit="cover"
             class="info_itemL"
             radius="10"
             width="100"
             height="100"
-            :src="logo_img"
+            :src="'https://qjz.oss-cn-shenzhen.aliyuncs.com/images/clean.png'"
           />
           <div class="info_itemR">
-            <div>姓名: {{item.contactName}}</div>
-            <!-- <div>联系电话: {{item.contactMobile}}</div> -->
-            <div>详细地址: {{item.contactAddr}}</div>
-            <div>服务: {{item.serviceItem}}</div>
+            <div>单位名称: {{item.companyName}}</div>
+            <div>详细地址: {{item.companyAddr}}</div>
+            <div>套餐类型: {{item.buyMonth===1?'月度套餐':item.buyMonth===6?'半年套餐':'月度套餐'}}</div>
             <div>
               价格:
               <span class="price">{{item.orderPrice}}</span>
@@ -40,17 +41,9 @@
             </div>
           </div>
         </div>
-        <div
-          v-if="item.orderStatus===1||(item.orderStatus===2||item.orderStatus===3||item.orderStatus===4&&item.addTimeId===0&&item.discountType===9)"
-          class="orderM_bot"
-        >
+        <div v-if="item.orderStatus===1||item.orderStatus===0" class="orderM_bot">
           <van-button v-if="item.orderStatus===1" @click="onCancel(item)" plain round>取消</van-button>
-          <!-- <van-button
-            v-if="(item.orderStatus===2||item.orderStatus===3||item.orderStatus===4)&&item.addTimeId===0&&item.discountType===9"
-            @click="onAddTime(item.id)"
-            type="primary"
-            round
-          >追单</van-button> -->
+          <van-button v-if="item.orderStatus===0" @click="onPay(item)" type="primary" round>付款</van-button>
         </div>
       </div>
     </van-list>
@@ -62,13 +55,12 @@ import axios from 'axios'
 import navbar from '@/components/navbar.vue'
 
 export default {
-  name: 'order',
+  name: 'maskOrder',
   components: {
     navbar,
   },
   data() {
     return {
-      logo_img: 'https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo-min.png',
       orderStatus: this.$route.params.status || 1,
       page: 1,
       limit: 8,
@@ -93,19 +85,16 @@ export default {
     getData(load = false) {
       let that = this
       axios
-        .get(
-          '/api/order/' + (this.orderStatus ? 'ordering_list' : 'ordered_list'),
-          {
-            params: {
-              limit: that.limit,
-              page: that.page,
-            },
-          }
-        )
+        .get('/api/demand_order/list', {
+          params: {
+            limit: that.limit,
+            page: that.page,
+            orderStatus: that.orderStatus,
+          },
+        })
         .then(function (res) {
           let resD = res.data
           if (resD.length < that.limit) {
-            console.log(1)
             that.finished = true
           }
           if (resD.length !== 0) {
@@ -115,11 +104,11 @@ export default {
           that.isLoading = false
         })
     },
-    goDetail(id) {
+    goDetail(item) {
       this.$router.push({
-        name: 'order_detail',
+        name: 'company_clean_detail',
         params: {
-          id,
+          item,
         },
       })
     },
@@ -128,11 +117,11 @@ export default {
       this.$dialog
         .confirm({
           title: '取消确认',
-          message: '是否确认取消该订单，订单金额将原路返回',
+          message: '是否确认取消该办公保洁订单，订单金额将原路返回',
         })
         .then(() => {
           axios
-            .post('/api/order/cancel', {
+            .post('/api/demand_order/cancel', {
               id: item.id,
             })
             .then(() => {
@@ -142,17 +131,23 @@ export default {
             })
         })
     },
-    //确认加单
-    onAddTime(id) {
+    //重新付款
+    onPay(item) {
       this.$dialog
         .confirm({
-          title: '确认加单',
-          message: '您已购买上门清洁服务套餐，半价即享加单1小时',
+          title: '付款确认',
+          message: `是否确认支付${item.orderPrice}元购买办公保洁${
+            item.buyMonth === 1
+              ? '月度套餐'
+              : item.buyMonth === 6
+              ? '半年套餐'
+              : '月度套餐'
+          }`,
         })
         .then(() => {
           axios
-            .post('/api/order/add_time', {
-              id: id,
+            .put('/api/demand_order/anew_pay', {
+              id: item.id,
             })
             .then((resF) => {
               console.log(resF)
@@ -173,26 +168,15 @@ export default {
                   },
                   (res) => {
                     if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                      this.$router
-                        .replace({
-                          name: 'mine',
-                        })
-                        .then(() => {
-                          sessionStorage.removeItem('form')
-                          this.$route.params.item = ''
-                          this.$toast.success('加单成功')
-                        })
+                      this.$toast.success('支付成功')
+                      item.orderStatus = 1
+                      item.orderStatusChina = '待审核'
                     } else {
                       this.$toast('支付失败')
                     }
                   }
                 )
-              } 
-              // else {
-              //   sessionStorage.removeItem('form')
-              //   this.$route.params.item = ''
-              //   this.$toast.success('加单成功')
-              // }
+              }
             })
         })
     },
@@ -210,7 +194,7 @@ export default {
     }
     console.log(this.$route.params.status)
     // this.active = this.$route.params.status
-    // this.orderStatus = this.$route.params.status
+    this.orderStatus = this.$route.params.status
     this.getData()
     // document.title = '我的订单'
   },

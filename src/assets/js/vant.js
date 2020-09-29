@@ -28,7 +28,8 @@ import {
   Tab,
   NavBar,
   RadioGroup,
-  Radio
+  Radio,
+  Uploader
 } from 'vant'
 
 Vue.use(Button)
@@ -60,3 +61,4 @@ Vue.use(Tabs)
 Vue.use(NavBar)
 Vue.use(RadioGroup)
 Vue.use(Radio)
+Vue.use(Uploader)

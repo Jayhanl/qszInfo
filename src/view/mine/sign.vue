@@ -8,7 +8,7 @@
       </button>
       <div class="instructions">
         <p class="title">
-          <img src="@/assets/images/sign.png" alt /> 签到说明：
+          <img src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/sign.png" alt /> 签到说明：
         </p>
         <p>1、每天限前2000名签到的用户将会获得碗碟清洗优惠券；</p>
         <p>2、原价10元的碗碟清洗服务，使用优惠券仅1.99元/次！</p>
@@ -58,7 +58,7 @@ export default {
       return
     }
     this.getData()
-    document.title = '市井&轻松装'
+    document.title = '市井&轻家政'
   }
 }
 </script>

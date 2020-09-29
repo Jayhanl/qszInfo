@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar :title="title||'市井&轻松装'" left-text="返回" left-arrow @click-left="onClickLeft">
+    <van-nav-bar :title="title||'市井&轻家政'" left-text="返回" left-arrow @click-left="onClickLeft">
       <!-- <template v-if="collect" #right>
         <van-icon @click="onCollect()" :name="isCollect===1?'star':'star-o'" color="#FFC347" size="20" />
       </template> -->

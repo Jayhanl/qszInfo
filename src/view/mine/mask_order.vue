@@ -1,9 +1,9 @@
 <template>
   <div class="order_container">
-    <navbar title="服务订单" />
+    <navbar title="口罩订单" />
     <van-tabs v-model="orderStatus" @click="onTabs" color="#2d4f98">
       <van-tab :name="1" title="进行中"></van-tab>
-      <van-tab :name="0" title="已结束"></van-tab>
+      <van-tab :name="0" title="已完成"></van-tab>
     </van-tabs>
     <van-list
       v-model="isLoading"
@@ -22,13 +22,13 @@
             radius="10"
             width="100"
             height="100"
-            :src="logo_img"
+            :src="'https://qjz.oss-cn-shenzhen.aliyuncs.com/images/mask_'+(item.goodsCate===1?'pm':'kn95')+'.jpg'"
           />
           <div class="info_itemR">
             <div>姓名: {{item.contactName}}</div>
             <!-- <div>联系电话: {{item.contactMobile}}</div> -->
             <div>详细地址: {{item.contactAddr}}</div>
-            <div>服务: {{item.serviceItem}}</div>
+            <div>口罩类型: {{item.goodsName}}</div>
             <div>
               价格:
               <span class="price">{{item.orderPrice}}</span>
@@ -40,17 +40,8 @@
             </div>
           </div>
         </div>
-        <div
-          v-if="item.orderStatus===1||(item.orderStatus===2||item.orderStatus===3||item.orderStatus===4&&item.addTimeId===0&&item.discountType===9)"
-          class="orderM_bot"
-        >
-          <van-button v-if="item.orderStatus===1" @click="onCancel(item)" plain round>取消</van-button>
-          <!-- <van-button
-            v-if="(item.orderStatus===2||item.orderStatus===3||item.orderStatus===4)&&item.addTimeId===0&&item.discountType===9"
-            @click="onAddTime(item.id)"
-            type="primary"
-            round
-          >追单</van-button> -->
+        <div v-if="item.orderStatus===1" class="orderM_bot">
+          <van-button @click="onCancel(item)" plain round>取消</van-button>
         </div>
       </div>
     </van-list>
@@ -62,13 +53,12 @@ import axios from 'axios'
 import navbar from '@/components/navbar.vue'
 
 export default {
-  name: 'order',
+  name: 'maskOrder',
   components: {
     navbar,
   },
   data() {
     return {
-      logo_img: 'https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo-min.png',
       orderStatus: this.$route.params.status || 1,
       page: 1,
       limit: 8,
@@ -94,7 +84,8 @@ export default {
       let that = this
       axios
         .get(
-          '/api/order/' + (this.orderStatus ? 'ordering_list' : 'ordered_list'),
+          '/api/mask_order/' +
+            (this.orderStatus ? 'ordering_list' : 'ordered_list'),
           {
             params: {
               limit: that.limit,
@@ -117,7 +108,7 @@ export default {
     },
     goDetail(id) {
       this.$router.push({
-        name: 'order_detail',
+        name: 'mask_detail',
         params: {
           id,
         },
@@ -128,71 +119,17 @@ export default {
       this.$dialog
         .confirm({
           title: '取消确认',
-          message: '是否确认取消该订单，订单金额将原路返回',
+          message: '是否确认取消该口罩订单，订单金额将原路返回',
         })
         .then(() => {
           axios
-            .post('/api/order/cancel', {
+            .post('/api/mask_order/cancel', {
               id: item.id,
             })
             .then(() => {
               this.$toast.success('操作成功')
               this.page = 1
               this.getData()
-            })
-        })
-    },
-    //确认加单
-    onAddTime(id) {
-      this.$dialog
-        .confirm({
-          title: '确认加单',
-          message: '您已购买上门清洁服务套餐，半价即享加单1小时',
-        })
-        .then(() => {
-          axios
-            .post('/api/order/add_time', {
-              id: id,
-            })
-            .then((resF) => {
-              console.log(resF)
-              if (typeof WeixinJSBridge === 'undefined') {
-                this.$toast({
-                  message: '请使用微信内置浏览器进行支付',
-                })
-              } else if (resF.data.timeStamp) {
-                WeixinJSBridge.invoke(
-                  'getBrandWCPayRequest',
-                  {
-                    appId: 'wx65dd7aa40a579725', // 公众号名称，由商户传入
-                    timeStamp: resF.data.timeStamp, // 时间戳，自1970年以来的秒数
-                    nonceStr: resF.data.nonceStr, // 随机串
-                    package: resF.data.package,
-                    signType: resF.data.signType, // 微信签名方式：
-                    paySign: resF.data.paySign, // 微信签名
-                  },
-                  (res) => {
-                    if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                      this.$router
-                        .replace({
-                          name: 'mine',
-                        })
-                        .then(() => {
-                          sessionStorage.removeItem('form')
-                          this.$route.params.item = ''
-                          this.$toast.success('加单成功')
-                        })
-                    } else {
-                      this.$toast('支付失败')
-                    }
-                  }
-                )
-              } 
-              // else {
-              //   sessionStorage.removeItem('form')
-              //   this.$route.params.item = ''
-              //   this.$toast.success('加单成功')
-              // }
             })
         })
     },

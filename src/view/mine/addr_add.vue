@@ -36,11 +36,19 @@
         label="所在小区"
         placeholder="点击选择小区"
         :rules="[{ required: true, message: '请选择小区' }]"
-        @click="showPlot = true"
+        @click="onShowPlot"
       />
       <van-popup v-model="showPlot" position="bottom">
         <van-picker show-toolbar :columns="sqList" @confirm="onPlot" @cancel="showPlot = false" />
       </van-popup>
+      <van-field
+        v-if="form.plot.text==='其它'"
+        v-model="form.housing"
+        label="单位小区"
+        maxlength="50"
+        placeholder="如：x单位或小区"
+        :rules="[{ required: true, message: '请填写单位小区名称' }]"
+      />
       <van-field
         v-model="form.contactAddr"
         type="textarea"
@@ -52,7 +60,7 @@
       <van-field
         v-model="form.remark"
         label="标签"
-        maxlength="100"
+        maxlength="20"
         placeholder="方便您快速辨认地址"
         :rules="[{ required: true, message: '请填写标签' }]"
       />
@@ -84,34 +92,42 @@ export default {
       sqList: {},
       form: {
         plot: {},
+        area: [],
       },
-      columnsPlot: ['珠江帝景', '鸿景花园', '泊雅湾', '利安花园'],
     }
   },
   methods: {
     onConfirm(arr) {
-      this.form.area = arr[0].name + ',' + arr[1].name + ',' + arr[2].name
-      console.log(arr)
+      this.form.area = [arr[0].name, arr[1].name, arr[2].name]
+      this.form.areaName = arr[0].name + ',' + arr[1].name + ',' + arr[2].name
       this.showArea = false
+      this.getSq()
     },
     onPlot(e) {
       console.log(e)
       this.form.plot = e
       this.showPlot = false
     },
+    onShowPlot() {
+      console.log(this.form.area.length)
+      if (this.form.area.length === 0) this.$toast('请先选择省市区')
+      else this.showPlot = true
+    },
     onAdd() {
+      let addr =
+        this.form.areaName +
+        ',' +
+        (this.form.plot.text === '其它'
+          ? this.form.housing
+          : this.form.plot.text) +
+        ',' +
+        this.form.contactAddr
       axios
         .post('/api/address/create', {
           contactName: this.form.contactName,
           contactMobile: this.form.contactMobile,
-          lng: this.form.plot.lng,
-          lat: this.form.plot.lat,
-          contactAddr:
-            this.form.area +
-            ',' +
-            this.form.plot.text +
-            ',' +
-            this.form.contactAddr,
+          housingId: this.form.plot.id,
+          contactAddr: addr,
           remark: this.form.remark,
         })
         .then((res) => {
@@ -131,12 +147,13 @@ export default {
       axios
         .get('/api/data/housing', {
           params: {
-            province: '广东省',
-            city: '广州市',
-            county: '海珠区',
+            province: this.form.area[0],
+            city: this.form.area[1],
+            county: this.form.area[2],
           },
         })
         .then((res) => {
+          this.form.plot = {}
           this.sqList = res.data
         })
     },
@@ -144,7 +161,7 @@ export default {
   created() {
     // document.title = '添加地址'
     // this.getData()
-    this.getSq()
+    // this.getSq()
   },
 }
 </script>

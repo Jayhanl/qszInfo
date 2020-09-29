@@ -1,15 +1,15 @@
 <template>
   <div class="form margin-bottom">
-    <img class="logo" src="@/assets/images/logo.png" />
-    <div class="title">
+    <img class="logo" src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo.png" />
+    <!-- <div class="title">
       <span>轻/装/时/代 无/处/不/在</span>
-    </div>
+    </div> -->
     <div class="form_container">
       <!-- <div class="form_title">
         <p>个人信息</p>
       </div>-->
       <van-form @submit="onSubmit">
-        <h3 style="padding-top:10px">轻松装服务</h3>
+        <h3 style="padding-top:10px">轻家政服务</h3>
         <div class="member_combo">
           <div
             v-for="(item,index) in columnsMember"
@@ -45,7 +45,7 @@
           checked-color="#07c160"
         >
           我已经阅读并同意
-          <router-link :to="{name:'agreement_qsz'}" class="agreement">《轻松装管家服务协议》</router-link>
+          <router-link :to="{name:'agreement_qsz'}" class="agreement">《轻家政管家服务协议》</router-link>
         </van-checkbox>
         <div class="btn">
           <van-button round block type="info" native-type="submit">确认下单</van-button>
@@ -380,7 +380,7 @@ export default {
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 {
-                  appId: 'wxd6dceeee251fe0ad', // 公众号名称，由商户传入
+                  appId: 'wx65dd7aa40a579725', // 公众号名称，由商户传入
                   timeStamp: resF.data.timeStamp, // 时间戳，自1970年以来的秒数
                   nonceStr: resF.data.nonceStr, // 随机串
                   package: resF.data.package,
@@ -429,7 +429,7 @@ export default {
       this.addrData = this.$route.params.item
     }
     this.form.maxDate = this.funDate(7)
-    document.title = '市井&轻松装'
+    document.title = '市井&轻家政'
   },
   destroyed() {
     console.log(123321321312)

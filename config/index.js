@@ -50,7 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/', // qszpf/
+    assetsPublicPath: '/', // qszpf/qszpfv2/
 
     /**
      * Source Maps

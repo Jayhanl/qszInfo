@@ -1,9 +1,9 @@
 <template>
   <div class="form">
     <img class="logo" src="../assets/images/logo.png" />
-    <div class="title">
+    <!-- <div class="title">
       <span>轻/装/时/代 无/处/不/在</span>
-    </div>
+    </div> -->
     <div class="form_container">
       <div class="form_title">
         <p>个人信息</p>
@@ -65,12 +65,12 @@
         />
         <van-field v-model="form.employeeId" label="推荐人编号" maxlength="19" placeholder="请填写推荐人编号" />
 
-        <!-- <van-field readonly clickable name="picker" :value="form.member.text" label="轻松装会员" placeholder="点击会员套餐"
+        <!-- <van-field readonly clickable name="picker" :value="form.member.text" label="轻家政会员" placeholder="点击会员套餐"
           :rules="[{ required: true, message: '请选择会员套餐' }]" @click="showMember = true" />
         <van-popup v-model="showMember" position="bottom">
           <van-picker show-toolbar :columns="columnsMember" @confirm="onConfirm" @cancel="showMember = false" />
         </van-popup>-->
-        <h3>轻松装会员</h3>
+        <h3>轻家政会员</h3>
         <div class="member_combo">
           <div
             v-for="(item,index) in columnsMember"
@@ -103,7 +103,7 @@
             class="agreement"
             @click="goAgreementUser"
           >《用户协议及隐私条款》</router-link>和
-          <router-link :to="{name:'agreement_qsz'}" class="agreement">《轻松装会员服务协议》</router-link>
+          <router-link :to="{name:'agreement_qsz'}" class="agreement">《轻家政会员服务协议》</router-link>
         </van-checkbox>
         <div class="btn">
           <van-button round block type="info" native-type="submit">购买会员</van-button>
@@ -245,7 +245,7 @@ export default {
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 {
-                  appId: 'wxd6dceeee251fe0ad', // 公众号名称，由商户传入
+                  appId: 'wx65dd7aa40a579725', // 公众号名称，由商户传入 wx65dd7aa40a579725
                   timeStamp: resF.data.timeStamp, // 时间戳，自1970年以来的秒数
                   nonceStr: resF.data.nonceStr, // 随机串
                   package: resF.data.package,
