@@ -23,7 +23,7 @@
         <p>个人信息</p>
       </div>-->
       <van-form @submit="onSubmit">
-        <h3 style="padding-top:10px">轻家政服务</h3>
+        <h3 style="padding-top:10px">钟点保姆</h3>
 
         <!-- 家政服务 -->
         <div class="member_combo">
@@ -446,7 +446,7 @@ export default {
     getData() {
       axios.get('/api/data/service_item').then((res) => {
         console.log(res.data)
-        this.columnsMember = res.data.filter(elem=>elem.serviceType===1).map((item) => {
+        this.columnsMember = res.data.filter(elem=>elem.serviceType===2).map((item) => {
           item.num = 0
           item.choice = false
           return item

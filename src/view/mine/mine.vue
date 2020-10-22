@@ -45,14 +45,14 @@
         </router-link>-->
       </div>
     </div>
-    <!-- <router-link :to="{name:'sign'}" class="active_container">
-      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="sign" />
+    <router-link :to="{name:'scan'}" class="active_container">
+      <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="qr" />
       <div class="active_text">
-        <span>每日签到</span>
-        <span class="active_text_english">Daily Attendance</span>
+        <span>扫码送礼</span>
+        <span class="active_text_english">Sweep Yards Gifts</span>
       </div>
       <div class="active_triangle"></div>
-    </router-link> -->
+    </router-link>
 
 
     <router-link :to="{name:'company_clean_order'}" class="active_container">
@@ -100,14 +100,14 @@
       <div class="active_triangle"></div>
     </router-link>
     
-    <router-link :to="{name:'mask_order'}" class="active_container">
+    <!-- <router-link :to="{name:'mask_order'}" class="active_container">
       <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="description" />
       <div class="active_text">
         <span>口罩订单</span>
         <span class="active_text_english">Mask Order</span>
       </div>
       <div class="active_triangle"></div>
-    </router-link>
+    </router-link> -->
     
     <router-link :to="{name:'contect'}" class="active_container">
       <van-icon size="23" style="margin: auto 20px;" color="#2d4f98" name="phone-o" />

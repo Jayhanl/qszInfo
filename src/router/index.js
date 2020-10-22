@@ -35,6 +35,11 @@ export default new Router({
     component: () => import('@/view/service/service.vue')
   },
   {
+    path: '/nurse',
+    name: 'nurse',
+    component: () => import('@/view/nurse/nurse.vue')
+  },
+  {
     path: '/mine',
     name: 'mine',
     component: () => import('@/view/mine/mine.vue')
@@ -48,6 +53,11 @@ export default new Router({
     path: '/sign',
     name: 'sign',
     component: () => import('@/view/mine/sign.vue')
+  },
+  {
+    path: '/scan',
+    name: 'scan',
+    component: () => import('@/view/mine/scan.vue')
   },
   {
     path: '/order',
