@@ -1,6 +1,9 @@
 <template>
   <div class="form padding-bottom">
-    <img class="logo" src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo.png" />
+    <img
+      class="logo"
+      src="https://qjz.oss-cn-shenzhen.aliyuncs.com/images/logo.png"
+    />
     <!-- <div class="title">
       <span>轻/装/时/代 无/处/不/在</span>
     </div>-->
@@ -23,19 +26,19 @@
         <p>个人信息</p>
       </div>-->
       <van-form @submit="onSubmit">
-        <h3 style="padding-top:10px">钟点保姆</h3>
+        <h3 style="padding-top: 10px" @click="onShowImg">双十一限时活动</h3>
 
         <!-- 家政服务 -->
         <div class="member_combo">
           <div
-            v-for="(item,index) in columnsMember"
+            v-for="(item, index) in columnsMember"
             :key="item.id"
-            :class="['item',item.id === combo?'active':'']"
+            :class="['item', item.id === combo ? 'active' : '']"
           >
             <div @click="changeMember(index)" class="cont">
-              <span class="name">{{item.serviceName}}</span>
-              <span>{{item.servicePrice+'元/'+item.unit}}</span>
-              <span v-if="item.tips" class="tips">{{item.tips}}</span>
+              <span class="name">{{ item.serviceName }}</span>
+              <span>{{ item.servicePrice + '元/' + item.unit }}</span>
+              <span v-if="item.tips" class="tips">{{ item.tips }}</span>
             </div>
             <van-stepper
               class="num"
@@ -47,11 +50,15 @@
             />
           </div>
         </div>
-
+        <div>
+          <span @click="onShowImg" style="font-size: 12px; color: #2d4f98"
+            >查看详情>></span
+          >
+        </div>
         <div class="form_price">
           <span>
             价格：
-            <span class="price">¥{{totalPrice}}</span>
+            <span class="price">¥{{ totalPrice }}</span>
           </span>
         </div>
         <van-checkbox
@@ -61,14 +68,22 @@
           checked-color="#2d4f98"
         >
           我已经阅读并同意
-          <router-link :to="{name:'agreement_qsz'}" class="agreement">《轻家政服务协议》</router-link>
+          <router-link :to="{ name: 'agreement_qsz' }" class="agreement"
+            >《轻家政服务协议》</router-link
+          >
         </van-checkbox>
         <div class="btn">
-          <van-button round block type="info" native-type="submit">确认下单</van-button>
+          <van-button round block type="info" native-type="submit"
+            >确认下单</van-button
+          >
         </div>
       </van-form>
       <!-- 确认下单弹框 -->
-      <van-dialog v-model="showConfirm" title="填写信息" :show-confirm-button="false">
+      <van-dialog
+        v-model="showConfirm"
+        title="填写信息"
+        :show-confirm-button="false"
+      >
         <van-form ref="confirm" @submit="onConfirm">
           <van-field
             readonly
@@ -106,29 +121,27 @@
             placeholder="请输入师傅编号(选填)"
           />
           <div class="btnRow">
-            <van-button class="cancel" round native-type="button" @click="showConfirm = false">取消</van-button>
-            <van-button class="confirm" round type="info" native-type="submit">预约下单</van-button>
+            <van-button
+              class="cancel"
+              round
+              native-type="button"
+              @click="showConfirm = false"
+              >取消</van-button
+            >
+            <van-button class="confirm" round type="info" native-type="submit"
+              >预约下单</van-button
+            >
           </div>
         </van-form>
       </van-dialog>
 
-      <!-- 确认购买弹框 -->
-      <van-dialog v-model="showConfirmS" title="上门清洁服务套餐" :show-confirm-button="false">
-        <div style="text-align:left;margin:0 20px;">
-          <p>1、提供5次1小时上门清洁服务</p>
-          <p>2、服务项目：倒垃圾、卫生间清洁、简单桌面整理、简单床铺整理、扫地拖地、衣服整理、厨房清洁</p>
-          <p>
-            限时优惠：
-            <span style="color:#f40;">99</span> 元
-          </p>
-        </div>
-        <div class="btnRow">
-          <van-button class="cancel" round native-type="button" @click="showConfirmS = false">取消</van-button>
-          <van-button class="confirm" round type="info" @click="payService">立即抢购</van-button>
-        </div>
-      </van-dialog>
       <!-- 弹窗的组件 -->
-      <van-calendar v-model="showCalendar" :max-date="form.maxDate" @confirm="onCalendar" />
+      <van-calendar
+        v-model="showCalendar"
+        :min-date="minDate"
+        :max-date="maxDate"
+        @confirm="onCalendar"
+      />
       <van-popup v-model="showTime" position="bottom">
         <van-picker
           show-toolbar
@@ -146,8 +159,9 @@
 <script>
 import axios from 'axios'
 import tabBar from '@/components/tabbar.vue'
+import { ImagePreview } from 'vant'
 export default {
-  name: 'service',
+  name: 'special',
   components: {
     tabBar,
   },
@@ -167,6 +181,8 @@ export default {
       addrData: {},
       combo: 0,
       totalPrice: 0,
+      minDate: new Date(2020, 10, 11),
+      maxDate: new Date(2020, 11, 10),
       columnsTime: [
         {
           id: 9,
@@ -218,118 +234,14 @@ export default {
         },
       ],
       columnsMember: [],
-      // columnsMember: [
-      //   {
-      //     id: 11,
-      //     num: 0,
-      //     choice: false,
-      //     price: 9.9,
-      //     name: '碗碟清洗',
-      //     text: '9.9元/次',
-      //     tips: '',
-      //   },
-      //   // {
-      //   //   id: 1,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 100,
-      //   //   name: '通厕所',
-      //   //   text: '100元(包通成)',
-      //   //   tips: ''
-      //   // },
-      //   // {
-      //   //   id: 2,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 70,
-      //   //   name: '管道疏通',
-      //   //   text: '70元',
-      //   //   tips: ''
-      //   // },
-      //   // {
-      //   //   id: 3,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 60,
-      //   //   name: '水龙头花洒安装',
-      //   //   text: '60元/个任务',
-      //   //   tips: '1小时内(不含物料)'
-      //   // },
-      //   // {
-      //   //   id: 4,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 80,
-      //   //   name: '桌椅柜门窗维护',
-      //   //   text: '80元/个任务',
-      //   //   tips: ''
-      //   // },
-      //   // {
-      //   //   id: 5,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 100,
-      //   //   name: '桌椅柜安装',
-      //   //   text: '100元/个任务',
-      //   //   tips: '(3个内)'
-      //   // },
-      //   // {
-      //   //   id: 6,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 30,
-      //   //   name: '换灯泡',
-      //   //   text: '30元/个灯泡',
-      //   //   tips: '(不含物料)'
-      //   // },
-      //   // {
-      //   //   id: 7,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 60,
-      //   //   name: '照明设备安装',
-      //   //   text: '60元/套',
-      //   //   tips: ''
-      //   // },
-      //   {
-      //     id: 8,
-      //     num: 0,
-      //     price: 65,
-      //     name: '搬运',
-      //     text: '65元/人/小时',
-      //     tips: '',
-      //   },
-      //   {
-      //     id: 9,
-      //     num: 0,
-      //     choice: false,
-      //     price: 29.9,
-      //     name: '家居整理清洁',
-      //     text: '29.9元/小时',
-      //     tips: '(不含家电清洗及家具清洁)',
-      //   },
-      //   {
-      //     id: 12,
-      //     num: 0,
-      //     choice: false,
-      //     price: 9.9,
-      //     name: '晾衣服',
-      //     text: '9.9元/次',
-      //     tips: '',
-      //   },
-      //   // {
-      //   //   id: 10,
-      //   //   num: 0,
-      //   //   choice: false,
-      //   //   price: 30,
-      //   //   name: '汽车外部清洗',
-      //   //   text: '30元/次',
-      //   //   tips: ''
-      //   // }
-      // ],
     }
   },
   methods: {
+    onShowImg(e) {
+      ImagePreview([
+        'https://qjz.oss-cn-shenzhen.aliyuncs.com/images/special.jpg',
+      ])
+    },
     //前往地址列表
     goAddr() {
       this.$router.push({
@@ -446,11 +358,13 @@ export default {
     getData() {
       axios.get('/api/data/service_item').then((res) => {
         console.log(res.data)
-        this.columnsMember = res.data.filter(elem=>elem.serviceType===2).map((item) => {
-          item.num = 0
-          item.choice = false
-          return item
-        })
+        this.columnsMember = res.data
+          .filter((elem) => elem.serviceType === 3)
+          .map((item) => {
+            item.num = 0
+            item.choice = false
+            return item
+          })
         console.log(this.columnsMember)
       })
     },
@@ -568,7 +482,7 @@ export default {
   },
   created() {
     if (!sessionStorage.getItem('token')) {
-      sessionStorage.setItem('url', 'nurse')
+      sessionStorage.setItem('url', 'special')
       this.$router.replace({
         name: 'index',
       })

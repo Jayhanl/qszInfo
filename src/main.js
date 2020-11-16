@@ -6,6 +6,7 @@ import router from './router'
 import VueClipboard from 'vue-clipboard2'
 import '@/assets/js/axios'
 import '@/assets/js//vant'
+// import '@/assets/css/resetui.less'
 
 Vue.use(VueClipboard)
 Vue.config.productionTip = false

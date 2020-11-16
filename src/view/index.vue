@@ -61,7 +61,7 @@ export default {
           if (sessionStorage.getItem('url')) {
             this.$router
               .replace({
-                name: 'service'
+                name: 'special'
               })
               .then(() => {
                 this.$router.push({
@@ -72,7 +72,7 @@ export default {
           } else if (res.data.userData.contactMobile) {
             this.$router
               .replace({
-                name: 'service'
+                name: 'special'
               })
               .then(() => {
                 if (sessionStorage.getItem('jump')) {

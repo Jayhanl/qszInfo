@@ -20,6 +20,7 @@
       />
       <van-cell title="订单状态:" :value="dataD.orderStatusChina" />
       <van-cell title="套餐类型:" :value="dataD.buyMonth===1?'月度套餐':dataD.buyMonth===6?'半年套餐':'月度套餐'" />
+      <van-cell title="服务次数:" :value="buyTypeChina" />
       <van-cell title="每月价格:" :value="dataD.unitPrice+'元'" />
       <van-cell title="购买月份:" :value="dataD.buyMonth+'个月'" />
       <van-cell title="订单总计:" :value="dataD.orderPrice+'元'" />

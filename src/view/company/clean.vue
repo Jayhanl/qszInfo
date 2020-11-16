@@ -59,7 +59,7 @@
         <van-field label="选择套餐">
           <template #input>
             <van-radio-group v-model="form.buyType" direction="horizontal">
-              <van-radio :name="1" checked-color="#2d4f98">每月26次</van-radio>
+              <van-radio :name="3" checked-color="#2d4f98">每月12次</van-radio>
               <van-radio :name="2" checked-color="#2d4f98">每月4次</van-radio>
             </van-radio-group>
           </template>
@@ -76,14 +76,14 @@
             <div class="cont">
               <span>半年套餐</span>
               <span class="nowPrice">{{halfYearPrice * (form.buyType===2?0.5:1)}}</span>
-              <span class="oldPrice">¥ {{halfYearOldPrice * (form.buyType===1?0.5:1)}}</span>
+              <span class="oldPrice">¥ {{halfYearOldPrice * (form.buyType===2?0.5:1)}}</span>
             </div>
           </div>
           <div :class="['item',combo === 12?'active':'']" @click="changeCombo(12)">
             <div class="cont">
               <span>年度套餐</span>
               <span class="nowPrice">{{yearPrice * (form.buyType===2?0.5:1)}}</span>
-              <span class="oldPrice">¥ {{yearOldPrice * (form.buyType===1?0.5:1)}}</span>
+              <span class="oldPrice">¥ {{yearOldPrice * (form.buyType===2?0.5:1)}}</span>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default {
         addr: '',
         areaSize: '',
         isNeedInvoice: 0,
-        buyType: 1,
+        buyType: 3,
         contract: '',
         isAgree: 0,
       },

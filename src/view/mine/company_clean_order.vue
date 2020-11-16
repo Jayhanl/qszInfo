@@ -28,8 +28,9 @@
           />
           <div class="info_itemR">
             <div>单位名称: {{item.companyName}}</div>
-            <div>详细地址: {{item.companyAddr}}</div>
+            <div>服务次数: {{item.buyTypeChina}}</div>
             <div>套餐类型: {{item.buyMonth===1?'月度套餐':item.buyMonth===6?'半年套餐':'月度套餐'}}</div>
+            <div>详细地址: {{item.companyAddr}}</div>
             <div>
               价格:
               <span class="price">{{item.orderPrice}}</span>

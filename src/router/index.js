@@ -40,6 +40,11 @@ export default new Router({
     component: () => import('@/view/nurse/nurse.vue')
   },
   {
+    path: '/special',
+    name: 'special',
+    component: () => import('@/view/special/special.vue')
+  },
+  {
     path: '/mine',
     name: 'mine',
     component: () => import('@/view/mine/mine.vue')
